@@ -66,8 +66,8 @@ export default function CustomerDetail({ params }: { params: Promise<{ id: strin
         ))}
       </div>
 
-      <div className="mt-5 grid gap-5 xl:grid-cols-[1fr_340px]">
-        <div className="space-y-5">
+      <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="min-w-0 space-y-5">
           <Panel title="Orders" padded={false}>
             <Table head={['Order', 'Date', 'Payment', 'Status', 'Total']}>
               {data.orders.map((o: any) => (

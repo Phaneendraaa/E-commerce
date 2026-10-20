@@ -152,7 +152,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <aside className="animate-slide-in absolute inset-y-0 left-0 w-64 [animation-direction:reverse]">{sidebar}</aside>
         </div>
       )}
-      <div className="lg:pl-60">
+      <div className="min-w-0 lg:pl-60">
         <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-line bg-surface/95 px-4 backdrop-blur md:px-8">
           <button className="btn btn-ghost btn-sm !px-2 lg:hidden" onClick={() => setOpen(true)} aria-label="Open menu">
             <Menu size={20} />

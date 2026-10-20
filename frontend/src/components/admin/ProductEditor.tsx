@@ -279,8 +279,8 @@ export function ProductEditor({ productId }: { productId?: string }) {
         </div>
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-[1fr_340px]">
-        <div className="space-y-5">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="min-w-0 space-y-5">
           <Panel title="Details">
             <div className="grid gap-4">
               <label className="block">

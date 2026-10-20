@@ -117,8 +117,8 @@ export default function AdminOrderDetail({ params }: { params: Promise<{ id: str
         </div>
       </div>
 
-      <div className="mt-6 grid gap-5 xl:grid-cols-[1fr_360px]">
-        <div className="space-y-5">
+      <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="min-w-0 space-y-5">
           <Panel title={`Items (${o.items.length})`} padded={false}>
             <ul className="divide-y divide-line">
               {o.items.map((i: any) => (
