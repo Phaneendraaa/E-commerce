@@ -32,11 +32,20 @@
   --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Figtree Variable', 'Figtree', ui-sans-serif, system-ui, sans-serif;
 
-  /* Charts (admin) — ordered for categorical series */
-  --chart-1: #1b1446;
-  --chart-2: #f2a900;
-  --chart-3: #0e7c86;
-  --chart-4: #e0457b;
-  --chart-5: #7b6fd6;
-  --chart-6: #9bb7ba;
+  /* Charts (admin) — categorical order validated for colour-blind separation
+     (scripts: dataviz validate_palette). Always paired with legends/labels. */
+  --chart-1: #5b4fd8;
+  --chart-2: #eb6834;
+  --chart-3: #1baf7a;
+  --chart-4: #eda100;
+  --chart-5: #e87ba4;
+  --chart-6: #008300;
+  --chart-muted: #b9b6c8; /* comparison / previous period */
+  --chart-grid: #ecebf3;
+  /* Sequential (heatmaps, magnitude) — one hue, light → dark */
+  --seq-1: #eeecfc;
+  --seq-2: #cfcaf6;
+  --seq-3: #a59ced;
+  --seq-4: #7a6ee2;
+  --seq-5: #4b3fc0;
 }
