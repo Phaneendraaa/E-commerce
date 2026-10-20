@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { authRouter } from './modules/auth/auth.routes';
 import { usersRouter } from './modules/users/users.routes';
+import { catalogRouter } from './modules/catalog/catalog.routes';
+import { cmsRouter } from './modules/cms/cms.routes';
 
 export const apiRouter = Router();
 
@@ -10,3 +12,5 @@ apiRouter.get('/', (_req, res) => {
 
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/users', usersRouter);
+apiRouter.use('/', catalogRouter);
+apiRouter.use('/cms', cmsRouter);

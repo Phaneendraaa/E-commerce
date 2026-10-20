@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" width="1600" height="640" preserveAspectRatio="xMidYMid slice">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset=".65" stop-color="#2563eb"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+<linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="1" stop-color="#cbd5e1"/></linearGradient></defs>
+<rect width="1600" height="640" fill="url(#bg)"/>
+<circle cx="1300" cy="320" r="300" fill="#ffffff" opacity=".08"/><circle cx="1350" cy="300" r="200" fill="#ffffff" opacity=".08"/>
+<circle cx="120" cy="560" r="160" fill="#ffffff" opacity=".05"/>
+<g transform="translate(1000 140) scale(.9)"><rect x="95" y="95" width="210" height="145" rx="12" fill="#f8fafc" stroke="#9fa1a3" stroke-width="3"/><rect x="107" y="107" width="186" height="121" rx="6" fill="url(#screen)"/><path d="M60 250 L340 250 L322 285 L78 285Z" fill="#caccce"/><rect x="170" y="252" width="60" height="8" rx="4" fill="#ffffff"/></g>
+<g transform="translate(1250 260) scale(.7)"><path d="M100 230 Q100 90 200 90 Q300 90 300 230" fill="none" stroke="#22d3ee" stroke-width="22" stroke-linecap="round" /><rect x="72" y="205" width="66" height="110" rx="30" fill="#22d3ee" /><rect x="262" y="205" width="66" height="110" rx="30" fill="#22d3ee" /><rect x="120" y="215" width="22" height="90" rx="10" fill="#00a5c0"/><rect x="258" y="215" width="22" height="90" rx="10" fill="#00a5c0"/></g>
+<!-- Upgrade Your Tech — Flagship phones, laptops & audio — no-cost EMI available -->
+</svg>
