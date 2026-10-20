@@ -1,0 +1,52 @@
+# Full stack: Postgres + API + storefront/admin.
+#   cp backend/.env.example backend/.env   (edit secrets)
+#   docker compose up -d --build
+#   docker compose exec api node dist/db/seed.js     # optional demo data
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ecommerce
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      retries: 10
+
+  api:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    restart: unless-stopped
+    env_file: backend/.env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/ecommerce
+    depends_on:
+      db: { condition: service_healthy }
+    ports:
+      - '4000:4000'
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        API_URL: http://api:4000
+        NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3000}
+    restart: unless-stopped
+    environment:
+      API_URL: http://api:4000
+    depends_on:
+      - api
+    ports:
+      - '3000:3000'
+    volumes:
+      # Keep admin-uploaded images across container rebuilds
+      - uploads:/app/frontend/public/images/uploads
+
+volumes:
+  pgdata:
+  uploads:
