@@ -837,6 +837,14 @@ export const returnsRelations = relations(returnRequests, ({ one }) => ({
   user: one(users, { fields: [returnRequests.userId], references: [users.id] }),
 }));
 
+export const remindersRelations = relations(scheduledReminders, ({ one }) => ({
+  order: one(orders, { fields: [scheduledReminders.orderId], references: [orders.id] }),
+}));
+
+export const auditLogsRelations = relations(auditLogs, ({ one }) => ({
+  user: one(users, { fields: [auditLogs.userId], references: [users.id] }),
+}));
+
 export const notificationLogsRelations = relations(notificationLogs, ({ one }) => ({
   order: one(orders, { fields: [notificationLogs.orderId], references: [orders.id] }),
   user: one(users, { fields: [notificationLogs.userId], references: [users.id] }),

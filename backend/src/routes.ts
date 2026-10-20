@@ -8,6 +8,7 @@ import { ordersRouter } from './modules/orders/orders.routes';
 import { paymentsRouter } from './modules/payments/payments.routes';
 import { trackRouter } from './modules/analytics/track.routes';
 import { whatsappWebhookRouter } from './modules/notifications/whatsapp.webhook';
+import { adminRouter } from './modules/admin';
 
 export const apiRouter = Router();
 
@@ -22,5 +23,6 @@ apiRouter.use('/orders', ordersRouter);
 apiRouter.use('/payments', paymentsRouter);
 apiRouter.use('/track', trackRouter);
 apiRouter.use('/webhooks/whatsapp', whatsappWebhookRouter);
+apiRouter.use('/admin', adminRouter);
 apiRouter.use('/', catalogRouter);
 apiRouter.use('/cms', cmsRouter);

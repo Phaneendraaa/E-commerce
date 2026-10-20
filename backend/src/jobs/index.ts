@@ -150,7 +150,7 @@ export async function abandonedCarts() {
       lt(carts.lastActivityAt, cutoff),
       lt(carts.reminderCount, 2),
       or(isNull(carts.lastReminderAt), lt(carts.lastReminderAt, new Date(Date.now() - 22 * 3_600_000))),
-      sql`exists (select 1 from cart_items ci where ci.cart_id = ${carts.id})`,
+      sql`exists (select 1 from cart_items ci where ci.cart_id = "carts"."id")`,
       gt(carts.lastActivityAt, new Date(Date.now() - 7 * 86_400_000)),
     ),
     limit: 50,

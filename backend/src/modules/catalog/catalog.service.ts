@@ -57,7 +57,7 @@ export async function breadcrumb(categoryId: string) {
 
 // ───────────── Product cards ─────────────
 
-const stockExpr = sql<number>`(select coalesce(sum(v.stock), 0)::int from product_variants v where v.product_id = ${products.id} and v.is_active)`;
+const stockExpr = sql<number>`(select coalesce(sum(v.stock), 0)::int from product_variants v where v.product_id = "products"."id" and v.is_active)`;
 
 export const cardColumns = {
   id: products.id,
@@ -174,7 +174,7 @@ export async function listProducts(q: ListQuery) {
       const values = (vals ?? '').split('|').filter(Boolean);
       if (!name || !values.length) continue;
       conds.push(
-        sql`exists (select 1 from product_variants v where v.product_id = ${products.id} and v.is_active and v.options->>${name} in ${values})`,
+        sql`exists (select 1 from product_variants v where v.product_id = "products"."id" and v.is_active and v.options->>${name} in ${values})`,
       );
     }
   }
@@ -226,7 +226,7 @@ async function buildFacets(where: SQL | undefined) {
     db.execute<{ key: string; value: string }>(sql`
       select distinct o.key, o.value
       from ${products}
-      join product_variants v on v.product_id = ${products.id} and v.is_active
+      join product_variants v on v.product_id = "products"."id" and v.is_active
       cross join lateral jsonb_each_text(v.options) o
       where ${where ?? sql`true`}
       order by o.key, o.value`),
