@@ -2,6 +2,7 @@ import { env } from './config/env';
 import { createApp } from './app';
 import { pool } from './db';
 import { logger } from './lib/logger';
+import { startJobs } from './jobs';
 
 async function main() {
   await pool.query('select 1');
@@ -10,6 +11,7 @@ async function main() {
   const server = app.listen(env.PORT, () => {
     logger.info(`🚀 API listening on http://localhost:${env.PORT} (${env.NODE_ENV})`);
   });
+  startJobs();
 
   const shutdown = async (signal: string) => {
     logger.info(`${signal} received — shutting down`);

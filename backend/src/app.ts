@@ -29,6 +29,7 @@ export function createApp() {
 
   // Raw body is needed for webhook signature verification — must run before express.json()
   app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
+  app.use('/api/webhooks/whatsapp', express.raw({ type: 'application/json' }));
 
   app.use(express.json({ limit: '1mb' }));
   app.use(express.urlencoded({ extended: true }));
