@@ -8,6 +8,7 @@ import { optionalAuth, requireAuth } from '../../middleware/auth';
 import { badRequest, notFound } from '../../utils/errors';
 import { normalizePhone } from '../../utils/format';
 import { getSettings } from '../settings/settings.service';
+import { background } from '../../lib/background';
 import * as catalog from './catalog.service';
 
 const { products, reviews, reviewVotes, questions, wishlistItems, recentlyViewed, brands, orders, orderItems, stockAlerts, productVariants } = schema;
@@ -122,12 +123,15 @@ catalogRouter.get(
     if (!p) throw notFound('Product');
 
     // Fire-and-forget view bookkeeping
-    void db.update(products).set({ viewCount: sql`${products.viewCount} + 1` }).where(eq(products.id, p.id));
+    background(db.update(products).set({ viewCount: sql`${products.viewCount} + 1` }).where(eq(products.id, p.id)).then(() => undefined));
     if (req.user) {
-      void db
+      background(
+        db
         .insert(recentlyViewed)
         .values({ userId: req.user.id, productId: p.id })
-        .onConflictDoUpdate({ target: [recentlyViewed.userId, recentlyViewed.productId], set: { viewedAt: new Date() } });
+        .onConflictDoUpdate({ target: [recentlyViewed.userId, recentlyViewed.productId], set: { viewedAt: new Date() } })
+          .then(() => undefined),
+      );
     }
 
     let inWishlist = false;

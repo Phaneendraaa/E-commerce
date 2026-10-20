@@ -243,6 +243,49 @@ export function startJobs() {
   logger.info('⏰ Background jobs scheduled');
 }
 
+// ───────────── Serverless mode (Vercel) ─────────────
+// No long-running process means no node-cron. Instead, due jobs are run
+// (a) opportunistically after API requests, at most once a minute per instance,
+// and (b) by Vercel Cron / any external cron hitting /api/cron/frequent.
+// Last-run times live in the settings table so all instances share them.
+
+const INTERVAL_MIN: Record<string, number> = { reminders: 1, 'expire-unpaid': 5, 'back-in-stock': 10, 'abandoned-carts': 15 };
+const FREQUENT: Record<string, () => Promise<void>> = {
+  reminders: processReminders,
+  'expire-unpaid': expireUnpaidOrders,
+  'back-in-stock': backInStock,
+  'abandoned-carts': abandonedCarts,
+};
+
+export async function runDueJobs(force = false) {
+  const ran: string[] = [];
+  await locked('due-jobs', async () => {
+    const row = await db.query.settings.findFirst({ where: (t, { eq: e }) => e(t.key, 'jobs_last_run') });
+    const last = ((row?.value as Record<string, number>) ?? {}) as Record<string, number>;
+    const now = Date.now();
+    for (const [name, fn] of Object.entries(FREQUENT)) {
+      if (!force && now - (last[name] ?? 0) < INTERVAL_MIN[name] * 60_000 - 5_000) continue;
+      try {
+        await fn();
+      } catch (e) {
+        logger.error(`Job ${name} failed`, e);
+      }
+      last[name] = Date.now();
+      ran.push(name);
+    }
+    await db
+      .insert(schema.settings)
+      .values({ key: 'jobs_last_run', value: last })
+      .onConflictDoUpdate({ target: schema.settings.key, set: { value: last } });
+  });
+  return ran;
+}
+
+export async function runDailyJobs() {
+  await locked('cleanup', cleanup);
+  await locked('admin-digest', adminDigest);
+}
+
 /** Manually trigger a job (admin panel "Run now"). */
 export const jobs = {
   reminders: processReminders,

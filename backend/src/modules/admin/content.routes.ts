@@ -11,6 +11,7 @@ import { getSettings, updateSettings, type StoreSettings } from '../settings/set
 import { notify } from '../notifications/notify';
 import { jobs } from '../../jobs';
 import { audit } from './helpers';
+import { background } from '../../lib/background';
 
 const { coupons, banners, pages, reviews, questions, notificationLogs, users, orders, auditLogs, newsletterSubscribers, couponRedemptions } = schema;
 export const adminContentRouter = Router();
@@ -316,11 +317,11 @@ adminContentRouter.post(
 
     await audit(req, 'broadcast', 'notification', null, { audience: b.audience, channels: b.channels, recipients: recipients.length });
     // Send in the background so the request returns quickly
-    void (async () => {
+    background(async () => {
       for (const r of recipients) {
         await notify({ template: 'CUSTOM', data: { name: r.name, subject: b.subject, message: b.message, waTemplate: b.waTemplate }, channels: b.channels, userId: r.id, to: { email: r.email, phone: r.phone } });
       }
-    })();
+    });
     res.status(202).json({ queued: recipients.length });
   }),
 );

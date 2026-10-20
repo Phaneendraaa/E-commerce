@@ -48,6 +48,7 @@ const schema = z.object({
 
   ENABLE_JOBS: bool(true),
   ABANDONED_CART_HOURS: z.coerce.number().default(3),
+  CRON_SECRET: z.string().optional().default(''),
 });
 
 const parsed = schema.safeParse(process.env);
@@ -61,6 +62,7 @@ export const env = {
   ...parsed.data,
   isProd: parsed.data.NODE_ENV === 'production',
   isTest: parsed.data.NODE_ENV === 'test',
+  serverless: Boolean(process.env.VERCEL),
   corsOrigins: parsed.data.CORS_ORIGINS.split(',').map((o) => o.trim()).filter(Boolean),
   razorpayEnabled: Boolean(parsed.data.RAZORPAY_KEY_ID && parsed.data.RAZORPAY_KEY_SECRET),
   emailEnabled: Boolean(parsed.data.GMAIL_USER && parsed.data.GMAIL_APP_PASSWORD),

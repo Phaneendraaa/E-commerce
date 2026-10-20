@@ -16,9 +16,11 @@
     "db:seed": "tsx src/db/seed.ts",
     "test": "vitest run",
     "images": "tsx src/db/generate-images.ts",
-    "admin:create": "tsx src/db/create-admin.ts"
+    "admin:create": "tsx src/db/create-admin.ts",
+    "vercel-build": "tsx src/db/migrate.ts && tsx src/db/seed-if-empty.ts"
   },
   "dependencies": {
+    "@vercel/functions": "^3.10.1",
     "axios": "^1.20.0",
     "bcryptjs": "^3.0.3",
     "compression": "^1.8.2",

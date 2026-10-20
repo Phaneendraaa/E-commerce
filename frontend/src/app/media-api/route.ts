@@ -76,6 +76,12 @@ function safeName(name: string) {
 
 export async function POST(req: NextRequest) {
   if (!(await isStaff(req))) return NextResponse.json({ error: { message: 'Staff only' } }, { status: 403 });
+  if (process.env.VERCEL) {
+    return NextResponse.json(
+      { error: { message: 'Uploads are disabled on Vercel (read-only disk). Add images to frontend/public/images in the repo and push, then pick them here.' } },
+      { status: 501 },
+    );
+  }
   const form = await req.formData();
   const files = form.getAll('files').filter((f): f is File => f instanceof File);
   if (!files.length) return NextResponse.json({ error: { message: 'No files received' } }, { status: 400 });

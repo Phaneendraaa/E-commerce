@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import { db, schema } from '../../db';
 import type { Channel } from '../../db/schema';
 import { logger } from '../../lib/logger';
+import { background } from '../../lib/background';
 import { getSettings } from '../settings/settings.service';
 import { sendEmail, type SendResult } from './providers/email';
 import { sendSms } from './providers/sms';
@@ -107,7 +108,7 @@ export async function notify(input: NotifyInput): Promise<NotifyResult[]> {
 
 /** Fire-and-forget variant for request handlers. */
 export function notifyAsync(input: NotifyInput) {
-  void notify(input);
+  background(notify(input));
 }
 
 /** Free-form WhatsApp text (only deliverable inside the 24h customer-service window). */

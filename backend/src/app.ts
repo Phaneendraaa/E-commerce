@@ -8,6 +8,19 @@ import { env } from './config/env';
 import { apiLimiter } from './middleware/rateLimit';
 import { errorHandler, notFoundHandler } from './middleware/error';
 import { apiRouter } from './routes';
+import { runDueJobs } from './jobs';
+import { waitUntil } from '@vercel/functions';
+
+/** Exact origins, or patterns with a single `*` (e.g. https://shop-*.vercel.app). */
+function originAllowed(origin: string) {
+  return env.corsOrigins.some((o) => {
+    if (!o.includes('*')) return o === origin;
+    const [pre, post] = o.split('*');
+    return origin.startsWith(pre) && origin.endsWith(post);
+  });
+}
+
+let lastJobKick = 0;
 
 export function createApp() {
   const app = express();
@@ -19,7 +32,7 @@ export function createApp() {
   app.use(
     cors({
       origin: (origin, cb) => {
-        if (!origin || env.corsOrigins.includes(origin)) return cb(null, true);
+        if (!origin || originAllowed(origin)) return cb(null, true);
         cb(new Error(`Origin ${origin} not allowed by CORS`));
       },
       credentials: true,
@@ -35,6 +48,17 @@ export function createApp() {
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
   if (!env.isTest) app.use(morgan(env.isProd ? 'combined' : 'dev'));
+
+  // Serverless: run due background jobs after responding (at most once a minute per instance)
+  if (env.serverless && env.ENABLE_JOBS) {
+    app.use((_req, _res, next) => {
+      if (Date.now() - lastJobKick > 60_000) {
+        lastJobKick = Date.now();
+        waitUntil(runDueJobs().catch(() => undefined));
+      }
+      next();
+    });
+  }
 
   app.get('/health', (_req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
 

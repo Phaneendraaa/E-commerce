@@ -9,6 +9,10 @@ import { paymentsRouter } from './modules/payments/payments.routes';
 import { trackRouter } from './modules/analytics/track.routes';
 import { whatsappWebhookRouter } from './modules/notifications/whatsapp.webhook';
 import { adminRouter } from './modules/admin';
+import { runDailyJobs, runDueJobs } from './jobs';
+import { env } from './config/env';
+import { forbidden } from './utils/errors';
+import { ah } from './utils/http';
 
 export const apiRouter = Router();
 
@@ -24,5 +28,23 @@ apiRouter.use('/payments', paymentsRouter);
 apiRouter.use('/track', trackRouter);
 apiRouter.use('/webhooks/whatsapp', whatsappWebhookRouter);
 apiRouter.use('/admin', adminRouter);
+
+/**
+ * Cron entry points for serverless hosting (Vercel Cron or any external pinger).
+ * Auth: `Authorization: Bearer <CRON_SECRET>` (Vercel Cron sends this automatically).
+ */
+apiRouter.get(
+  '/cron/:which',
+  ah(async (req, res) => {
+    const auth = req.get('authorization');
+    if (!env.CRON_SECRET || auth !== `Bearer ${env.CRON_SECRET}`) throw forbidden('Invalid cron secret');
+    if (req.params.which === 'daily') {
+      await runDailyJobs();
+      return void res.json({ ok: true, ran: ['cleanup', 'admin-digest'] });
+    }
+    const ran = await runDueJobs(req.query.force === '1');
+    res.json({ ok: true, ran });
+  }),
+);
 apiRouter.use('/', catalogRouter);
 apiRouter.use('/cms', cmsRouter);
