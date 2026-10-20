@@ -214,7 +214,7 @@ export async function findUserOrder(userId: string, idOrNumber: string) {
   const byNumber = !/^[0-9a-f-]{36}$/i.test(idOrNumber);
   const o = await db.query.orders.findFirst({
     where: and(byNumber ? eq(orders.orderNumber, idOrNumber) : eq(orders.id, idOrNumber), eq(orders.userId, userId)),
-    with: { items: true, history: { orderBy: (h, { asc }) => asc(h.createdAt) }, returns: true },
+    with: { items: { with: { product: { columns: { slug: true } } } }, history: { orderBy: (h, { asc }) => asc(h.createdAt) }, returns: true },
   });
   if (!o) throw notFound('Order');
   return o;

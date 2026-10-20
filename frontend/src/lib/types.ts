@@ -198,6 +198,7 @@ export type OrderStatus =
 export interface OrderItem {
   id: string;
   productId: string;
+  productSlug?: string | null;
   variantId: string;
   name: string;
   variantTitle: string;

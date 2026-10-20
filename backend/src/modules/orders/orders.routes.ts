@@ -86,7 +86,7 @@ ordersRouter.get(
     res.json({
       order: {
         ...o,
-        items: o.items.map(({ costPrice: _c, ...i }) => i),
+        items: o.items.map(({ costPrice: _c, product, ...i }) => ({ ...i, productSlug: product?.slug ?? null })),
         canCancel: CANCELLABLE.includes(o.status),
         canReturn: Boolean(returnOpen),
         returnWindowEndsAt: deliveredAt ? new Date(deliveredAt + s.returnWindowDays * 86_400_000) : null,
