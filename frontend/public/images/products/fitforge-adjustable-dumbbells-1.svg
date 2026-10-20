@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(0) scale(1) translate(-200 -200)"><rect x="110" y="190" width="180" height="22" rx="6" fill="#64748b"/><rect x="70" y="130" width="40" height="142" rx="12" fill="#739337" /><rect x="40" y="155" width="34" height="92" rx="10" fill="#456509"/><rect x="290" y="130" width="40" height="142" rx="12" fill="#739337" /><rect x="326" y="155" width="34" height="92" rx="10" fill="#456509"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">FITFORGE</text>
+
 </svg>

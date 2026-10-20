@@ -1,5 +1,5 @@
 import { and, asc, desc, eq, gte, ilike, inArray, lte, or, sql, type SQL } from 'drizzle-orm';
-import { db, schema } from '../../db';
+import { db, schema, type Tx } from '../../db';
 
 const { products, productVariants, categories, brands } = schema;
 
@@ -331,8 +331,8 @@ export async function recalcRating(productId: string) {
 }
 
 /** Keep the denormalized product price in sync with its cheapest active variant. */
-export async function syncProductPrice(productId: string) {
-  await db.execute(sql`
+export async function syncProductPrice(productId: string, tx: Tx = db) {
+  await tx.execute(sql`
     update products p set
       price = coalesce(v.price, p.price),
       compare_at_price = v.compare_at_price

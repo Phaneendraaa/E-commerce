@@ -102,7 +102,7 @@ function productSvg(kind: Icon, color: string, variant: number, label: string) {
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(${rot}) scale(${scale}) translate(-200 -200)">${icon(kind, color)}</g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">${label.toUpperCase()}</text>
+
 </svg>`;
 }
 

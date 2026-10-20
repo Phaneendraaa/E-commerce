@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(0) scale(1) translate(-200 -200)"><path d="M145 105 L90 130 L58 250 L100 262 L120 200 L120 330 L280 330 L280 200 L300 262 L342 250 L310 130 L255 105Z" fill="#4d7c0f" /><path d="M150 108 Q200 40 250 108 Q200 160 150 108Z" fill="#1f4e00"/><rect x="160" y="250" width="80" height="45" rx="10" fill="#1f4e00"/><line x1="190" y1="130" x2="186" y2="185" stroke="#6c9b2e" stroke-width="4"/><line x1="210" y1="130" x2="214" y2="185" stroke="#6c9b2e" stroke-width="4"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">NORTHPEAK</text>
+
 </svg>

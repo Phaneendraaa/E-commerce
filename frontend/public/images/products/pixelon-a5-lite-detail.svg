@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(-8) scale(1.12) translate(-200 -200)"><rect x="130" y="55" width="140" height="290" rx="26" fill="#16a34a" /><rect x="141" y="68" width="118" height="264" rx="18" fill="#0f172a"/><rect x="141" y="68" width="118" height="264" rx="18" fill="url(#screen)"/><rect x="180" y="76" width="40" height="9" rx="4.5" fill="#0f172a"/><circle cx="200" cy="200" r="34" fill="none" stroke="#ffffff55" stroke-width="3"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">PIXELON</text>
+
 </svg>

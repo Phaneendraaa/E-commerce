@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(0) scale(1) translate(-200 -200)"><path d="M140 95 L95 120 L60 175 L105 200 L120 180 L120 320 L280 320 L280 180 L295 200 L340 175 L305 120 L260 95 Q200 135 140 95Z" fill="#1e3a8a" /><path d="M160 98 Q200 125 240 98" fill="none" stroke="#000c5c" stroke-width="8"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">VELORA</text>
+
 </svg>

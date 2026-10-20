@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(0) scale(1) translate(-200 -200)"><rect x="85" y="140" width="230" height="140" rx="70" fill="#dc2626" /><circle cx="150" cy="210" r="42" fill="#ae0000"/><circle cx="150" cy="210" r="18" fill="#fb4545"/><circle cx="250" cy="210" r="42" fill="#ae0000"/><circle cx="250" cy="210" r="18" fill="#fb4545"/><rect x="170" y="128" width="60" height="16" rx="8" fill="#ae0000"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">NIMBUS</text>
+
 </svg>

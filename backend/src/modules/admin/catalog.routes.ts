@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { and, asc, desc, eq, ilike, inArray, or, sql, type SQL } from 'drizzle-orm';
 import { z } from 'zod';
 import slugify from 'slugify';
-import { db, schema } from '../../db';
+import { db, schema, type Tx } from '../../db';
 import { ah, pageMeta, paging } from '../../utils/http';
 import { validate } from '../../middleware/validate';
 import { requireRole } from '../../middleware/auth';
@@ -168,24 +168,24 @@ const productInput = z.object({
   variants: z.array(variantInput).min(1, 'Add at least one variant').max(200),
 });
 
-async function saveVariants(productId: string, variants: z.infer<typeof variantInput>[]) {
+async function saveVariants(productId: string, variants: z.infer<typeof variantInput>[], tx: Tx = db) {
   const keepIds = variants.map((v) => v.id).filter(Boolean) as string[];
-  const existing = await db.query.productVariants.findMany({ where: eq(productVariants.productId, productId), columns: { id: true } });
+  const existing = await tx.query.productVariants.findMany({ where: eq(productVariants.productId, productId), columns: { id: true } });
   const toRemove = existing.map((e) => e.id).filter((id) => !keepIds.includes(id));
   if (toRemove.length) {
     // Variants that were ordered must be kept for history → deactivate instead of delete
-    const ordered = await db.selectDistinct({ id: orderItems.variantId }).from(orderItems).where(inArray(orderItems.variantId, toRemove));
+    const ordered = await tx.selectDistinct({ id: orderItems.variantId }).from(orderItems).where(inArray(orderItems.variantId, toRemove));
     const orderedIds = ordered.map((o) => o.id);
-    if (orderedIds.length) await db.update(productVariants).set({ isActive: false }).where(inArray(productVariants.id, orderedIds));
+    if (orderedIds.length) await tx.update(productVariants).set({ isActive: false }).where(inArray(productVariants.id, orderedIds));
     const deletable = toRemove.filter((id) => !orderedIds.includes(id));
-    if (deletable.length) await db.delete(productVariants).where(inArray(productVariants.id, deletable));
+    if (deletable.length) await tx.delete(productVariants).where(inArray(productVariants.id, deletable));
   }
   for (const v of variants) {
     const data = { ...v, title: v.title || Object.values(v.options).join(' / ') || 'Default', productId };
-    if (v.id) await db.update(productVariants).set(data).where(and(eq(productVariants.id, v.id), eq(productVariants.productId, productId)));
-    else await db.insert(productVariants).values({ ...data, id: undefined });
+    if (v.id) await tx.update(productVariants).set(data).where(and(eq(productVariants.id, v.id), eq(productVariants.productId, productId)));
+    else await tx.insert(productVariants).values({ ...data, id: undefined });
   }
-  await syncProductPrice(productId);
+  await syncProductPrice(productId, tx);
 }
 
 adminCatalogRouter.post(
@@ -195,11 +195,15 @@ adminCatalogRouter.post(
   ah(async (req, res) => {
     const { variants, ...data } = req.body as z.infer<typeof productInput>;
     const cheapest = [...variants].sort((a, b) => a.price - b.price)[0];
-    const [p] = await db
-      .insert(products)
-      .values({ ...data, slug: await uniqueSlug(products, data.slug || data.name), price: cheapest.price, compareAtPrice: cheapest.compareAtPrice ?? null })
-      .returning();
-    await saveVariants(p.id, variants);
+    const slugValue = await uniqueSlug(products, data.slug || data.name);
+    const p = await db.transaction(async (tx) => {
+      const [row] = await tx
+        .insert(products)
+        .values({ ...data, slug: slugValue, price: cheapest.price, compareAtPrice: cheapest.compareAtPrice ?? null })
+        .returning();
+      await saveVariants(row.id, variants, tx);
+      return row;
+    });
     await audit(req, 'create', 'product', p.id, { name: p.name });
     res.status(201).json({ product: p });
   }),
@@ -211,13 +215,13 @@ adminCatalogRouter.put(
   validate({ body: productInput }),
   ah(async (req, res) => {
     const { variants, ...data } = req.body as z.infer<typeof productInput>;
-    const [p] = await db
-      .update(products)
-      .set({ ...data, slug: await uniqueSlug(products, data.slug || data.name, req.params.id) })
-      .where(eq(products.id, req.params.id))
-      .returning();
-    if (!p) throw notFound('Product');
-    await saveVariants(p.id, variants);
+    const slugValue = await uniqueSlug(products, data.slug || data.name, req.params.id);
+    const p = await db.transaction(async (tx) => {
+      const [row] = await tx.update(products).set({ ...data, slug: slugValue }).where(eq(products.id, req.params.id)).returning();
+      if (!row) throw notFound('Product');
+      await saveVariants(row.id, variants, tx);
+      return row;
+    });
     await audit(req, 'update', 'product', p.id, { name: p.name });
     res.json({ product: p });
   }),

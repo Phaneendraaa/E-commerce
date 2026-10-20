@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(0) scale(1) translate(-200 -200)"><rect x="165" y="70" width="70" height="70" rx="10" fill="#9da7b3"/><rect x="165" y="260" width="70" height="70" rx="10" fill="#9da7b3"/><circle cx="200" cy="200" r="80" fill="#cbd5e1" stroke="#727c88" stroke-width="3"/><circle cx="200" cy="200" r="62" fill="#0f172a"/><line x1="200" y1="200" x2="200" y2="158" stroke="#fff" stroke-width="5" stroke-linecap="round"/><line x1="200" y1="200" x2="232" y2="210" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="200" cy="200" r="5" fill="#cbd5e1"/><rect x="278" y="190" width="14" height="20" rx="4" fill="#9da7b3"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">CHRONOVA</text>
+
 </svg>

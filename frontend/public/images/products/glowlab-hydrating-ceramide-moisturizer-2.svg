@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(6) scale(0.82) translate(-200 -200)"><rect x="110" y="140" width="180" height="180" rx="40" fill="#96818d" /><rect x="100" y="105" width="200" height="55" rx="18" fill="#68535f"/><rect x="140" y="200" width="120" height="70" rx="12" fill="#b5a0ac"/><rect x="160" y="222" width="80" height="10" rx="5" fill="#68535f"/><rect x="172" y="242" width="56" height="8" rx="4" fill="#68535f"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">GLOWLAB</text>
+
 </svg>

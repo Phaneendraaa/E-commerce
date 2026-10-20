@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(0) scale(1) translate(-200 -200)"><path d="M100 230 Q100 90 200 90 Q300 90 300 230" fill="none" stroke="#1e3a8a" stroke-width="22" stroke-linecap="round" /><rect x="72" y="205" width="66" height="110" rx="30" fill="#1e3a8a" /><rect x="262" y="205" width="66" height="110" rx="30" fill="#1e3a8a" /><rect x="120" y="215" width="22" height="90" rx="10" fill="#000c5c"/><rect x="258" y="215" width="22" height="90" rx="10" fill="#000c5c"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">AURIX</text>
+
 </svg>

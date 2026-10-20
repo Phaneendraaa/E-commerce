@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(6) scale(0.82) translate(-200 -200)"><ellipse cx="170" cy="215" rx="115" ry="105" fill="#6a3636"/><ellipse cx="170" cy="210" rx="98" ry="88" fill="#334155"/><ellipse cx="150" cy="190" rx="40" ry="22" fill="#47556988"/><rect x="270" y="196" width="110" height="26" rx="13" fill="#111827" transform="rotate(-12 270 209)"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">KITCHORA</text>
+
 </svg>

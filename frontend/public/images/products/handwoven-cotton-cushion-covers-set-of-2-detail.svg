@@ -5,5 +5,5 @@
 <rect width="400" height="400" fill="url(#bg)"/>
 <ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
 <g filter="url(#sh)" transform="translate(200 200) rotate(-8) scale(1.12) translate(-200 -200)"><path d="M95 105 Q200 80 305 105 Q330 200 305 295 Q200 320 95 295 Q70 200 95 105Z" fill="#d6c4a8" stroke="#7d6b4f" stroke-width="3"/><path d="M120 140 Q200 125 280 140 M115 200 Q200 185 285 200 M120 260 Q200 245 280 260" stroke="#a8967a" stroke-width="7" fill="none"/></g>
-<text x="20" y="384" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#0f172a" opacity=".35">TERRA HOME</text>
+
 </svg>
