@@ -5,7 +5,7 @@ import { Footer } from '@/components/store/Footer';
 import { CartDrawer } from '@/components/store/CartDrawer';
 
 const fallback: StoreSettings = {
-  storeName: 'Verdant',
+  storeName: 'Fertilizers',
   tagline: 'Fertilizers & crop nutrition, delivered to your farm.',
   supportEmail: 'support@shopnest.dev',
   supportPhone: '',

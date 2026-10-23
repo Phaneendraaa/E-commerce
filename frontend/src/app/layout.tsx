@@ -10,7 +10,7 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await serverApi<{ settings: StoreSettings }>('/cms/settings', { revalidate: 300 });
-  const name = data?.settings.storeName ?? 'Verdant';
+  const name = data?.settings.storeName ?? 'Fertilizers';
   const tagline = data?.settings.tagline ?? 'Fertilizers & crop nutrition, delivered to your farm.';
   return {
     metadataBase: new URL(SITE),

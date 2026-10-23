@@ -34,7 +34,7 @@ export interface StoreSettings {
 }
 
 export const defaultSettings: StoreSettings = {
-  storeName: process.env.EMAIL_FROM_NAME || 'Verdant',
+  storeName: process.env.EMAIL_FROM_NAME || 'Fertilizers',
   tagline: 'Fertilizers & crop nutrition, delivered to your farm.',
   supportEmail: 'support@shopnest.dev',
   supportPhone: '+91 90000 00000',
