@@ -8,7 +8,16 @@ import path from 'path';
 import { sql } from 'drizzle-orm';
 import { db, pool } from './index';
 
+/** One-off: STORE_NAME_SET=<name> renames the store in the DB on deploy (unset it afterwards). */
+async function applyStoreName() {
+  const name = process.env.STORE_NAME_SET?.trim();
+  if (!name) return;
+  await db.execute(sql`update settings set value = jsonb_set(value::jsonb, '{storeName}', to_jsonb(${name}::text)), updated_at = now() where key = 'store'`);
+  console.log(`Store name set to "${name}"`);
+}
+
 async function main() {
+  await applyStoreName();
   if (process.env.SEED_DEMO_DATA !== 'true') return console.log('SEED_DEMO_DATA is not "true" — skipping seed');
   const { rows } = await db.execute<{ n: number }>(sql`select count(*)::int as n from users`);
   const reset = process.env.SEED_RESET === 'true';
