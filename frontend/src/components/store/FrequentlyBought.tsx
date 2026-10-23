@@ -32,9 +32,9 @@ export function FrequentlyBought({ base, items }: { base: ProductDetail; items: 
   };
 
   return (
-    <section className="container-x mt-16">
-      <h2 className="mb-5 text-2xl md:text-3xl">Frequently bought together</h2>
-      <div className="flex flex-col gap-6 rounded-[var(--radius-lg)] bg-surface p-5 ring-1 ring-line md:flex-row md:items-center md:p-7">
+    <section className="container-x mt-3 md:mt-5">
+      <h2 className="mb-5 text-[17px] md:text-[21px]">Frequently bought together</h2>
+      <div className="flex flex-col gap-6 rounded-[var(--radius)] border border-line bg-surface p-3 md:flex-row md:items-center md:p-7">
         <div className="flex flex-1 items-center gap-2 overflow-x-auto md:gap-4">
           {all.map((a, i) => (
             <div key={a.id} className="flex items-center gap-2 md:gap-4">
@@ -64,7 +64,7 @@ export function FrequentlyBought({ base, items }: { base: ProductDetail; items: 
         </div>
         <div className="shrink-0 md:w-56">
           <div className="text-sm text-muted">Total for {picked.size} items</div>
-          <div className="price text-3xl">{inr(total)}</div>
+          <div className="price text-2xl">{inr(total)}</div>
           <button disabled={busy || !picked.size} onClick={addAll} className="btn btn-primary mt-3 w-full">
             {busy ? 'Adding…' : `Add ${picked.size} to cart`}
           </button>

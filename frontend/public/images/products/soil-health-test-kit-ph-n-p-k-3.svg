@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="800" height="800">
+<defs><radialGradient id="bg" cx="50%" cy="38%" r="80%"><stop offset="0" stop-color="#e8ffdf"/><stop offset="1" stop-color="#b5d0ac"/></radialGradient><filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#0b2415" flood-opacity=".22"/></filter></defs>
+<rect width="400" height="400" fill="url(#bg)"/><circle cx="340" cy="60" r="110" fill="#fff" opacity=".25"/>
+<ellipse cx="200" cy="392" rx="190" ry="12" fill="#0b2415" opacity=".1"/>
+<g filter="url(#sh)" transform="translate(196 230) rotate(0) scale(1.3) translate(-200 -200)"><polygon points="96,118 126,92 316,92 286,118" fill="#78936f"/>
+<polygon points="286,118 316,92 316,296 286,322" fill="#1c3713"/>
+<rect x="96" y="118" width="190" height="204" rx="3" fill="#4f6a46"/>
+<text x="180" y="146" font-family="Helvetica, Arial, sans-serif" font-size="9.5" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="2.5">GREENLEAF LABS</text>
+<path d="M120 156 H240" stroke="#e5a117" stroke-width="3"/>
+<rect x="116" y="168" width="150" height="112" rx="8" fill="#fffdf5"/>
+<rect x="132" y="196" width="15" height="28" rx="7" fill="#e5a117" opacity=".95"/><rect x="130" y="192" width="19" height="7" rx="3" fill="#cfd8cf"/><rect x="155" y="184" width="15" height="40" rx="7" fill="#2f9e5a" opacity=".95"/><rect x="153" y="180" width="19" height="7" rx="3" fill="#cfd8cf"/><rect x="178" y="190" width="15" height="34" rx="7" fill="#d1432a" opacity=".95"/><rect x="176" y="186" width="19" height="7" rx="3" fill="#cfd8cf"/><rect x="201" y="180" width="15" height="44" rx="7" fill="#2b6cb0" opacity=".95"/><rect x="199" y="176" width="19" height="7" rx="3" fill="#cfd8cf"/><rect x="224" y="194" width="15" height="30" rx="7" fill="#7a4fb0" opacity=".95"/><rect x="222" y="190" width="19" height="7" rx="3" fill="#cfd8cf"/>
+<rect x="126" y="228" width="130" height="3" rx="1.5" fill="#4f6a46" opacity=".35"/>
+<text x="191" y="252" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="800" fill="#1c3713" text-anchor="middle" letter-spacing="0">SOIL TEST</text>
+<text x="191" y="270" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#6b7a70" text-anchor="middle" letter-spacing="0.8">25 TESTS · PH N P K</text>
+<text x="191" y="304" font-family="Helvetica, Arial, sans-serif" font-size="8.3" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1">IN-FIELD SOIL TESTING KIT</text>
+<circle cx="276" cy="124" r="22" fill="#e5a117" stroke="#fff" stroke-width="3"/>
+<text x="276" y="129" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="800" fill="#0f2e1d" text-anchor="middle" letter-spacing="0">50</text></g>
+</svg>

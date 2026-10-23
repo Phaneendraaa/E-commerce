@@ -25,14 +25,14 @@ export function Stars({ value, size = 14, className }: { value: number; size?: n
 
 export function Price({ price, compareAt, size = 'md', className }: { price: number; compareAt?: number | null; size?: 'sm' | 'md' | 'lg' | 'xl'; className?: string }) {
   const off = compareAt && compareAt > price ? Math.round(((compareAt - price) / compareAt) * 100) : 0;
-  const main = { sm: 'text-[15px]', md: 'text-lg', lg: 'text-2xl', xl: 'text-[34px]' }[size];
+  const main = { sm: 'text-[15px]', md: 'text-[17px]', lg: 'text-xl', xl: 'text-[26px]' }[size];
   return (
     <div className={clsx('flex flex-wrap items-baseline gap-x-2 gap-y-0.5', className)}>
       <span className={clsx('price', main)}>{inr(price)}</span>
       {off > 0 && (
         <>
-          <span className="text-[13px] text-faint line-through tabular-nums">{inr(compareAt!)}</span>
-          <span className="text-[13px] font-bold text-rose">{off}% off</span>
+          <span className="text-[12px] text-faint line-through tabular-nums">{inr(compareAt!)}</span>
+          <span className="text-[12px] font-bold text-peacock">{off}% off</span>
         </>
       )}
     </div>
@@ -42,13 +42,13 @@ export function Price({ price, compareAt, size = 'md', className }: { price: num
 export function Badge({ children, tone = 'neutral', className }: { children: ReactNode; tone?: 'neutral' | 'info' | 'success' | 'warn' | 'danger' | 'accent'; className?: string }) {
   const tones = {
     neutral: 'bg-tile text-ink',
-    info: 'bg-[#e9e7fb] text-ink-soft',
+    info: 'bg-[#e3ecf7] text-[#1f4f86]',
     success: 'bg-peacock-soft text-peacock',
-    warn: 'bg-marigold-soft text-[#8a5d00]',
+    warn: 'bg-marigold-soft text-[#7a5200]',
     danger: 'bg-rose-soft text-danger',
     accent: 'bg-marigold text-ink',
   };
-  return <span className={clsx('inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap', tones[tone], className)}>{children}</span>;
+  return <span className={clsx('inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold whitespace-nowrap', tones[tone], className)}>{children}</span>;
 }
 
 export function Spinner({ className, size = 18 }: { className?: string; size?: number }) {
@@ -95,7 +95,7 @@ export function Img({ src, alt, className }: { src?: string | null; alt: string;
 }
 
 /** Accessible modal / drawer. */
-export function Sheet({ open, onClose, title, children, side = 'right', width = 'max-w-md' }: { open: boolean; onClose: () => void; title?: ReactNode; children: ReactNode; side?: 'right' | 'center'; width?: string }) {
+export function Sheet({ open, onClose, title, children, side = 'right', width = 'max-w-md' }: { open: boolean; onClose: () => void; title?: ReactNode; children: ReactNode; side?: 'right' | 'left' | 'center'; width?: string }) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -114,12 +114,12 @@ export function Sheet({ open, onClose, title, children, side = 'right', width = 
       <div
         className={clsx(
           'absolute flex flex-col bg-surface shadow-2xl',
-          side === 'right' ? `animate-slide-in right-0 top-0 h-full w-full ${width}` : `left-1/2 top-1/2 max-h-[90vh] w-[calc(100%-32px)] ${width} -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)]`,
+          side === 'right' ? `animate-slide-in right-0 top-0 h-full w-full ${width}` : side === 'left' ? `animate-slide-in-left left-0 top-0 h-full w-full ${width}` : `left-1/2 top-1/2 max-h-[90vh] w-[calc(100%-32px)] ${width} -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)]`,
         )}
       >
         {title !== undefined && (
-          <div className="flex items-center justify-between border-b border-line px-5 py-4">
-            <div className="font-display text-lg font-bold">{title}</div>
+          <div className="flex items-center justify-between border-b border-line px-4 py-3">
+            <div className="font-display text-base font-semibold">{title}</div>
             <button onClick={onClose} className="btn btn-ghost btn-sm !px-2" aria-label="Close">
               <X size={18} />
             </button>
@@ -135,7 +135,7 @@ export function Empty({ icon, title, body, action }: { icon?: ReactNode; title: 
   return (
     <div className="flex flex-col items-center px-6 py-16 text-center">
       {icon && <div className="mb-4 grid size-16 place-items-center rounded-full bg-tile text-ink">{icon}</div>}
-      <h3 className="text-xl">{title}</h3>
+      <h3 className="text-lg">{title}</h3>
       {body && <p className="mt-2 max-w-sm text-muted">{body}</p>}
       {action && <div className="mt-6">{action}</div>}
     </div>
@@ -154,7 +154,7 @@ export function Field({ label, error, hint, children, className }: { label?: str
 
 export function QtyStepper({ value, onChange, max = 10, disabled }: { value: number; onChange: (n: number) => void; max?: number; disabled?: boolean }) {
   return (
-    <div className="inline-flex h-9 items-center rounded-full border-[1.5px] border-line bg-surface">
+    <div className="inline-flex h-9 items-center rounded-[var(--radius-sm)] border border-line bg-surface">
       <button type="button" className="grid h-full w-9 place-items-center text-lg disabled:opacity-40" disabled={disabled || value <= 1} onClick={() => onChange(value - 1)} aria-label="Decrease quantity">
         −
       </button>

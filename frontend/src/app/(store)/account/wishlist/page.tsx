@@ -24,7 +24,7 @@ export default function WishlistPage() {
 
   return (
     <div>
-      <h1 className="text-[32px] md:text-[40px]">Wishlist</h1>
+      <h1 className="text-[22px] md:text-[28px]">Wishlist</h1>
       <p className="mt-1 text-sm text-muted">We’ll keep these safe. Prices and stock update live.</p>
       <div className="mt-6">
         {!visible ? (

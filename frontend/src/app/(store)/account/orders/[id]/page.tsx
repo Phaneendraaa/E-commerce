@@ -83,7 +83,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
       </Link>
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-[28px] md:text-[36px]">Order {order.orderNumber}</h1>
+          <h1 className="text-[20px] md:text-[26px]">Order {order.orderNumber}</h1>
           <p className="text-sm text-muted">Placed {dateTime(order.createdAt)}</p>
         </div>
         <StatusBadge status={order.status} />

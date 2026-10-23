@@ -1,89 +1,51 @@
-/* Demo catalog used by the seed script and the image generator. Prices in rupees. */
+/*
+ * Demo catalog used by the seed script and the image generator (fertilizer & crop-nutrition skin).
+ * Prices are in rupees; each product lists its pack sizes as [label, price, MRP].
+ * Brand names are fictional — replace them with the brands you actually stock.
+ */
 
-export type Icon =
-  | 'tshirt'
-  | 'hoodie'
-  | 'dress'
-  | 'jeans'
-  | 'sneaker'
-  | 'watch'
-  | 'bag'
-  | 'backpack'
-  | 'sunglasses'
-  | 'phone'
-  | 'headphones'
-  | 'earbuds'
-  | 'laptop'
-  | 'smartwatch'
-  | 'speaker'
-  | 'mug'
-  | 'lamp'
-  | 'pan'
-  | 'bottle'
-  | 'jar'
-  | 'dumbbell'
-  | 'yogamat'
-  | 'plant'
-  | 'cushion';
-
-export const COLORS: Record<string, string> = {
-  Black: '#1f2937',
-  White: '#f1f5f9',
-  Navy: '#1e3a8a',
-  Red: '#dc2626',
-  Olive: '#4d7c0f',
-  Beige: '#d6c4a8',
-  Pink: '#ec4899',
-  Blue: '#2563eb',
-  Grey: '#9ca3af',
-  Green: '#16a34a',
-  Silver: '#cbd5e1',
-  Gold: '#d4a017',
-  Teal: '#0d9488',
-  Purple: '#7c3aed',
-  Orange: '#ea580c',
-  Brown: '#92400e',
-};
+export type PackKind = 'bag' | 'bottle' | 'pouch' | 'tub' | 'box';
 
 export interface SeedCategory {
   name: string;
   slug: string;
   parent?: string;
   description: string;
-  icon: Icon;
+  icon: PackKind;
+  /** Pastel backdrop for category art */
   tint: string;
+  /** Pack colour drawn on the backdrop */
+  tone: string;
   featured?: boolean;
 }
 
 export const categories: SeedCategory[] = [
-  { name: 'Fashion', slug: 'fashion', description: 'Clothing, footwear and accessories for every style.', icon: 'tshirt', tint: '#fde68a', featured: true },
-  { name: 'Men', slug: 'men', parent: 'fashion', description: 'T-shirts, hoodies, jeans and more for men.', icon: 'hoodie', tint: '#bfdbfe' },
-  { name: 'Women', slug: 'women', parent: 'fashion', description: 'Dresses, tops and everyday essentials.', icon: 'dress', tint: '#fbcfe8' },
-  { name: 'Footwear', slug: 'footwear', parent: 'fashion', description: 'Sneakers and shoes built for comfort.', icon: 'sneaker', tint: '#fed7aa' },
-  { name: 'Accessories', slug: 'accessories', parent: 'fashion', description: 'Watches, bags and sunglasses.', icon: 'watch', tint: '#e9d5ff' },
-  { name: 'Electronics', slug: 'electronics', description: 'Phones, audio, laptops and wearables.', icon: 'phone', tint: '#c7d2fe', featured: true },
-  { name: 'Mobiles', slug: 'mobiles', parent: 'electronics', description: 'Latest smartphones at the best prices.', icon: 'phone', tint: '#bae6fd' },
-  { name: 'Audio', slug: 'audio', parent: 'electronics', description: 'Headphones, earbuds and speakers.', icon: 'headphones', tint: '#a5f3fc' },
-  { name: 'Laptops', slug: 'laptops', parent: 'electronics', description: 'Ultrabooks and performance laptops.', icon: 'laptop', tint: '#ddd6fe' },
-  { name: 'Wearables', slug: 'wearables', parent: 'electronics', description: 'Smartwatches and fitness bands.', icon: 'smartwatch', tint: '#bbf7d0' },
-  { name: 'Home & Kitchen', slug: 'home-kitchen', description: 'Cookware, decor and home essentials.', icon: 'lamp', tint: '#fecaca', featured: true },
-  { name: 'Beauty', slug: 'beauty', description: 'Skincare and personal care.', icon: 'bottle', tint: '#fce7f3', featured: true },
-  { name: 'Sports & Fitness', slug: 'sports-fitness', description: 'Gear for workouts, yoga and the outdoors.', icon: 'dumbbell', tint: '#d9f99d', featured: true },
+  { name: 'Nitrogen', slug: 'nitrogen', description: 'Urea, CAN, ammonium sulphate and liquid nitrogen for leafy growth.', icon: 'bag', tint: '#dbe8f7', tone: '#1f5fa8', featured: true },
+  { name: 'DAP, SSP & Potash', slug: 'phosphatic-potassic', description: 'Phosphatic and potassic fertilizers for roots, flowering and fruit quality.', icon: 'bag', tint: '#f6e0d3', tone: '#b4532a', featured: true },
+  { name: 'NPK Complex', slug: 'npk-complex', description: 'Balanced granular complex fertilizers for basal and top dressing.', icon: 'bag', tint: '#dcefd9', tone: '#2f7d3a', featured: true },
+  { name: 'Water Soluble', slug: 'water-soluble', description: '100% soluble grades for drip irrigation, fertigation and foliar sprays.', icon: 'pouch', tint: '#d6efee', tone: '#0e8a8a', featured: true },
+  { name: 'Micronutrients', slug: 'micronutrients', description: 'Zinc, boron, iron, magnesium and chelated mixes to fix hidden hunger.', icon: 'pouch', tint: '#e8dff3', tone: '#7a4fb0', featured: true },
+  { name: 'Organic & Bio', slug: 'organic-bio', description: 'Vermicompost, neem cake, manure and bio-fertilizer cultures.', icon: 'bag', tint: '#eadfce', tone: '#7a5230', featured: true },
+  { name: 'Growth Boosters', slug: 'growth-boosters', description: 'Seaweed, humic and amino-acid boosters for vigour and fruit set.', icon: 'bottle', tint: '#f7ebc4', tone: '#b07a0a', featured: true },
+  { name: 'Soil Care', slug: 'soil-care', description: 'Gypsum, lime and test kits to fix soil structure and pH.', icon: 'tub', tint: '#e5e7da', tone: '#5b6b4e', featured: true },
 ];
 
-export const brands = ['Urbanloom', 'Northpeak', 'Velora', 'Stridex', 'Aurix', 'Nimbus', 'Pixelon', 'Kitchora', 'Glowlab', 'FitForge', 'Terra Home', 'Chronova'];
+export const brands = ['TerraGro', 'NutriCrop', 'AgroPlus', 'KisanGold', 'BioHarvest', 'GreenLeaf Labs', 'CropMax', 'Vasundhara'];
 
 export interface SeedProduct {
   name: string;
   category: string;
   brand: string;
-  icon: Icon;
-  price: number;
-  mrp?: number;
-  cost?: number;
-  colors?: string[];
-  sizes?: string[];
-  storage?: string[];
+  /** Packaging drawn in the product art */
+  pack: PackKind;
+  /** Label colour of the pack */
+  tone: string;
+  /** Big text on the pack, e.g. "19:19:19" */
+  badge: string;
+  /** Small line on the pack, e.g. "Water soluble NPK" */
+  sub: string;
+  /** [pack size, price ₹, MRP ₹] — first entry is the entry-level pack shown in listings */
+  packs: [string, number, number][];
   short: string;
   description: string;
   specs: [string, string][];
@@ -91,95 +53,371 @@ export interface SeedProduct {
   featured?: boolean;
   newArrival?: boolean;
   dealHours?: number;
-  stock?: number;
   taxRate?: number;
+  // Derived below
+  price: number;
+  mrp: number;
+  cost: number;
 }
 
-const tee = ['S', 'M', 'L', 'XL', 'XXL'];
+type Raw = Omit<SeedProduct, 'price' | 'mrp' | 'cost'>;
 
-export const products: SeedProduct[] = [
-  // ── Men
-  { name: 'Essential Cotton Crew T-Shirt', category: 'men', brand: 'Urbanloom', icon: 'tshirt', price: 499, mrp: 999, cost: 180, colors: ['Black', 'White', 'Navy', 'Olive'], sizes: tee, short: '100% combed cotton, breathable everyday tee.', description: 'Our bestselling crew-neck tee in 180 GSM combed cotton. Pre-shrunk, bio-washed for a soft hand-feel, and cut for a modern regular fit that holds its shape wash after wash.', specs: [['Fabric', '100% Combed Cotton'], ['Fit', 'Regular'], ['GSM', '180'], ['Care', 'Machine wash cold']], tags: ['tshirt', 'cotton', 'basics', 'men'], featured: true, taxRate: 5 },
-  { name: 'Oversized Graphic Hoodie', category: 'men', brand: 'Northpeak', icon: 'hoodie', price: 1499, mrp: 2499, cost: 620, colors: ['Black', 'Grey', 'Olive'], sizes: tee, short: 'Brushed fleece hoodie with a relaxed drop-shoulder fit.', description: 'Heavyweight 320 GSM brushed fleece, kangaroo pocket, ribbed cuffs and a double-layer hood. Built for chilly evenings and long flights.', specs: [['Fabric', '80% Cotton, 20% Poly'], ['Fit', 'Oversized'], ['GSM', '320']], tags: ['hoodie', 'winter', 'streetwear'], newArrival: true, taxRate: 12 },
-  { name: 'Slim Fit Stretch Jeans', category: 'men', brand: 'Urbanloom', icon: 'jeans', price: 1799, mrp: 2999, cost: 700, colors: ['Blue', 'Black'], sizes: ['28', '30', '32', '34', '36'], short: 'Mid-rise slim jeans with 2% stretch for all-day comfort.', description: 'Crafted from rigid-look stretch denim with a clean wash. Five-pocket styling, YKK zip and a tapered leg that pairs with everything.', specs: [['Fabric', '98% Cotton, 2% Elastane'], ['Rise', 'Mid'], ['Fit', 'Slim']], tags: ['jeans', 'denim'], taxRate: 12 },
-  { name: 'Classic Oxford Polo', category: 'men', brand: 'Velora', icon: 'tshirt', price: 899, mrp: 1599, cost: 340, colors: ['White', 'Navy', 'Red'], sizes: tee, short: 'Piqué polo with a crisp collar.', description: 'A smart-casual staple in breathable cotton piqué with a two-button placket and side vents.', specs: [['Fabric', 'Cotton Piqué'], ['Collar', 'Ribbed']], tags: ['polo', 'smart casual'], dealHours: 30, taxRate: 5 },
-  // ── Women
-  { name: 'Floral Wrap Midi Dress', category: 'women', brand: 'Velora', icon: 'dress', price: 1899, mrp: 3299, cost: 720, colors: ['Pink', 'Navy', 'Beige'], sizes: ['XS', 'S', 'M', 'L', 'XL'], short: 'Flowy viscose wrap dress with a flattering tie waist.', description: 'Lightweight viscose crepe in an all-over floral print. Adjustable wrap tie, flutter sleeves and a midi hem that moves beautifully.', specs: [['Fabric', '100% Viscose'], ['Length', 'Midi'], ['Neck', 'V-neck']], tags: ['dress', 'summer', 'floral'], featured: true, newArrival: true, taxRate: 12 },
-  { name: 'Ribbed Knit Crop Top', category: 'women', brand: 'Urbanloom', icon: 'tshirt', price: 599, mrp: 1199, cost: 210, colors: ['White', 'Black', 'Pink', 'Green'], sizes: ['XS', 'S', 'M', 'L'], short: 'Second-skin rib knit with a square neckline.', description: 'Soft stretch rib knit that layers under jackets or shines on its own.', specs: [['Fabric', '95% Cotton, 5% Spandex'], ['Fit', 'Slim']], tags: ['top', 'crop', 'basics'], taxRate: 5 },
-  { name: 'High-Rise Wide Leg Jeans', category: 'women', brand: 'Northpeak', icon: 'jeans', price: 2199, mrp: 3499, cost: 860, colors: ['Blue', 'Beige'], sizes: ['24', '26', '28', '30', '32'], short: 'Retro wide leg with a cinched high waist.', description: 'Non-stretch cotton denim in a vintage wash with a full-length wide leg.', specs: [['Fabric', '100% Cotton'], ['Rise', 'High']], tags: ['jeans', 'wide leg'], dealHours: 52, taxRate: 12 },
-  // ── Footwear
-  { name: 'AirFlex Running Sneakers', category: 'footwear', brand: 'Stridex', icon: 'sneaker', price: 2999, mrp: 4999, cost: 1300, colors: ['White', 'Black', 'Blue'], sizes: ['6', '7', '8', '9', '10', '11'], short: 'Responsive foam midsole with breathable mesh upper.', description: 'Engineered mesh upper, cushioned EVA midsole and a grippy rubber outsole for road runs and daily miles.', specs: [['Upper', 'Engineered mesh'], ['Midsole', 'EVA foam'], ['Drop', '8 mm']], tags: ['shoes', 'running', 'sneakers'], featured: true, taxRate: 18 },
-  { name: 'Retro Court Canvas Shoes', category: 'footwear', brand: 'Stridex', icon: 'sneaker', price: 1299, mrp: 1999, cost: 520, colors: ['White', 'Red', 'Navy'], sizes: ['6', '7', '8', '9', '10'], short: 'Timeless low-top canvas with vulcanized sole.', description: 'Durable cotton canvas, padded collar and a classic vulcanized rubber sole.', specs: [['Upper', 'Canvas'], ['Sole', 'Rubber']], tags: ['shoes', 'casual', 'canvas'], taxRate: 12 },
-  { name: 'Trail Pro Hiking Boots', category: 'footwear', brand: 'Northpeak', icon: 'sneaker', price: 4499, mrp: 6999, cost: 2100, colors: ['Brown', 'Olive'], sizes: ['7', '8', '9', '10', '11'], short: 'Waterproof membrane and lugged outsole for rough terrain.', description: 'Seam-sealed waterproof construction, ankle support and a 5 mm lugged outsole for confident footing.', specs: [['Waterproof', 'Yes'], ['Weight', '540 g / shoe']], tags: ['boots', 'hiking', 'outdoor'], newArrival: true, taxRate: 18 },
-  // ── Accessories
-  { name: 'Chronova Heritage Automatic Watch', category: 'accessories', brand: 'Chronova', icon: 'watch', price: 8999, mrp: 14999, cost: 4200, colors: ['Silver', 'Gold', 'Black'], short: 'Sapphire crystal, 40-hour power reserve, 5 ATM.', description: 'A self-winding automatic movement visible through an exhibition caseback, sapphire crystal and a stainless steel bracelet.', specs: [['Movement', 'Automatic'], ['Case', '41 mm steel'], ['Water resistance', '5 ATM']], tags: ['watch', 'automatic', 'gift'], featured: true, taxRate: 18 },
-  { name: 'Everyday Leather Tote', category: 'accessories', brand: 'Velora', icon: 'bag', price: 2499, mrp: 3999, cost: 1050, colors: ['Brown', 'Black', 'Beige'], short: 'Full-grain leather tote that fits a 14" laptop.', description: 'Structured full-grain leather with a zip pocket, padded laptop sleeve and comfortable shoulder drop.', specs: [['Material', 'Full-grain leather'], ['Fits', '14" laptop']], tags: ['bag', 'tote', 'leather'], taxRate: 18 },
-  { name: 'Polarized Aviator Sunglasses', category: 'accessories', brand: 'Aurix', icon: 'sunglasses', price: 1199, mrp: 2499, cost: 380, colors: ['Gold', 'Black', 'Silver'], short: 'UV400 polarized lenses with lightweight metal frame.', description: 'Glare-cutting polarized lenses with full UV400 protection and spring hinges.', specs: [['Lens', 'Polarized UV400'], ['Frame', 'Metal']], tags: ['sunglasses', 'summer'], dealHours: 20, taxRate: 18 },
-  { name: 'Commuter Anti-Theft Backpack', category: 'accessories', brand: 'Northpeak', icon: 'backpack', price: 1999, mrp: 3499, cost: 800, colors: ['Black', 'Grey', 'Navy'], short: 'Hidden zips, USB port and a water-resistant shell.', description: '25 L capacity with a padded 15.6" laptop compartment, hidden back pocket and an external USB charging port.', specs: [['Capacity', '25 L'], ['Laptop', 'Up to 15.6"']], tags: ['backpack', 'travel', 'laptop bag'], taxRate: 18 },
-  // ── Mobiles
-  { name: 'Pixelon X12 Pro 5G', category: 'mobiles', brand: 'Pixelon', icon: 'phone', price: 34999, mrp: 41999, cost: 28000, colors: ['Black', 'Blue', 'Silver'], storage: ['8GB/128GB', '12GB/256GB'], short: '6.7" 120Hz AMOLED, 50MP OIS camera, 5000mAh.', description: 'A flagship-grade experience: 6.7" LTPO AMOLED, 50 MP stabilized main camera, 67 W fast charging and 4 years of OS updates.', specs: [['Display', '6.7" AMOLED 120Hz'], ['Camera', '50 MP + 12 MP + 10 MP'], ['Battery', '5000 mAh, 67 W'], ['Network', '5G']], tags: ['smartphone', '5g', 'android'], featured: true, taxRate: 18 },
-  { name: 'Pixelon A5 Lite', category: 'mobiles', brand: 'Pixelon', icon: 'phone', price: 11999, mrp: 14999, cost: 9500, colors: ['Green', 'Black'], storage: ['4GB/64GB', '6GB/128GB'], short: 'Big battery, bright display, budget friendly.', description: '6.5" HD+ display, 6000 mAh battery and a 48 MP dual camera at an incredible price.', specs: [['Display', '6.5" HD+'], ['Battery', '6000 mAh']], tags: ['smartphone', 'budget'], dealHours: 44, taxRate: 18 },
-  { name: 'Nimbus Fold Z', category: 'mobiles', brand: 'Nimbus', icon: 'phone', price: 89999, mrp: 109999, cost: 76000, colors: ['Black', 'Silver'], storage: ['12GB/256GB', '12GB/512GB'], short: 'Foldable 7.6" inner display, flagship performance.', description: 'Unfold a tablet-sized 7.6" display. Flagship chipset, IPX8, and a hinge tested for 200,000 folds.', specs: [['Inner display', '7.6" AMOLED'], ['Water resistance', 'IPX8']], tags: ['foldable', 'flagship', '5g'], newArrival: true, taxRate: 18 },
-  // ── Audio
-  { name: 'Aurix Studio ANC Headphones', category: 'audio', brand: 'Aurix', icon: 'headphones', price: 7999, mrp: 12999, cost: 3800, colors: ['Black', 'Silver', 'Navy'], short: 'Hybrid ANC, 40-hour battery, LDAC hi-res audio.', description: 'Adaptive hybrid noise cancellation, plush memory-foam ear cushions and a 40-hour battery with 10-minute quick charge for 5 hours.', specs: [['ANC', 'Hybrid adaptive'], ['Battery', '40 h'], ['Codec', 'LDAC / AAC / SBC']], tags: ['headphones', 'anc', 'wireless'], featured: true, taxRate: 18 },
-  { name: 'Aurix Buds Air 3', category: 'audio', brand: 'Aurix', icon: 'earbuds', price: 2499, mrp: 4999, cost: 1100, colors: ['White', 'Black'], short: 'True wireless earbuds with ENC mics and 30h total.', description: '10 mm drivers, quad-mic ENC for clear calls, low-latency game mode and IPX5 sweat resistance.', specs: [['Playtime', '30 h with case'], ['Rating', 'IPX5']], tags: ['earbuds', 'tws', 'wireless'], dealHours: 18, taxRate: 18 },
-  { name: 'Boombox Mini Bluetooth Speaker', category: 'audio', brand: 'Nimbus', icon: 'speaker', price: 1799, mrp: 2999, cost: 750, colors: ['Black', 'Red', 'Teal'], short: '20W punchy sound, IPX7 waterproof, 12h play.', description: 'Rugged, waterproof and loud. Pair two for stereo sound.', specs: [['Output', '20 W'], ['Waterproof', 'IPX7']], tags: ['speaker', 'bluetooth', 'party'], taxRate: 18 },
-  // ── Laptops
-  { name: 'Nimbus Book Air 14', category: 'laptops', brand: 'Nimbus', icon: 'laptop', price: 64999, mrp: 79999, cost: 54000, colors: ['Silver', 'Grey'], storage: ['16GB/512GB', '16GB/1TB'], short: '14" 2.8K OLED, 1.2 kg, all-day battery.', description: 'An ultralight aluminium laptop with a 2.8K OLED display, backlit keyboard, Wi-Fi 6E and up to 18 hours of battery.', specs: [['Display', '14" 2.8K OLED'], ['Weight', '1.2 kg'], ['Battery', 'Up to 18 h']], tags: ['laptop', 'ultrabook', 'oled'], featured: true, taxRate: 18 },
-  { name: 'Pixelon Creator 16 Pro', category: 'laptops', brand: 'Pixelon', icon: 'laptop', price: 119999, mrp: 139999, cost: 98000, colors: ['Black'], storage: ['32GB/1TB'], short: 'RTX graphics, 165Hz 16" display for creators.', description: 'Dedicated RTX graphics, a colour-accurate 16" 165 Hz panel and advanced vapor-chamber cooling.', specs: [['GPU', 'RTX 4070'], ['Display', '16" QHD+ 165Hz']], tags: ['laptop', 'gaming', 'creator'], newArrival: true, taxRate: 18 },
-  // ── Wearables
-  { name: 'FitForge Pulse Smartwatch', category: 'wearables', brand: 'FitForge', icon: 'smartwatch', price: 3499, mrp: 6999, cost: 1500, colors: ['Black', 'Pink', 'Teal'], short: 'AMOLED, SpO2, 100+ sport modes, BT calling.', description: '1.43" AMOLED always-on display, heart rate and SpO2 tracking, Bluetooth calling and 10-day battery.', specs: [['Display', '1.43" AMOLED'], ['Battery', '10 days'], ['Calling', 'Bluetooth']], tags: ['smartwatch', 'fitness'], featured: true, dealHours: 60, taxRate: 18 },
-  { name: 'FitForge Band 7', category: 'wearables', brand: 'FitForge', icon: 'smartwatch', price: 1999, mrp: 2999, cost: 800, colors: ['Black', 'Purple'], short: 'Slim fitness band with 14-day battery.', description: 'Track steps, sleep, stress and workouts with a lightweight band that lasts two weeks.', specs: [['Battery', '14 days'], ['Water', '5 ATM']], tags: ['fitness band', 'tracker'], taxRate: 18 },
-  // ── Home & Kitchen
-  { name: 'Kitchora Granite Non-Stick Pan', category: 'home-kitchen', brand: 'Kitchora', icon: 'pan', price: 1299, mrp: 2199, cost: 520, sizes: ['24 cm', '28 cm'], short: 'PFOA-free granite coating, induction compatible.', description: 'Five-layer granite non-stick coating, cool-touch handle and an induction-ready base.', specs: [['Coating', 'Granite, PFOA-free'], ['Induction', 'Yes']], tags: ['cookware', 'kitchen', 'pan'], featured: true, taxRate: 18 },
-  { name: 'Ceramic Stoneware Mug Set (4)', category: 'home-kitchen', brand: 'Terra Home', icon: 'mug', price: 799, mrp: 1299, cost: 280, colors: ['Teal', 'Beige', 'Black'], short: 'Hand-glazed 350 ml mugs, microwave safe.', description: 'Set of four reactive-glaze stoneware mugs, each slightly unique.', specs: [['Capacity', '350 ml each'], ['Microwave safe', 'Yes']], tags: ['mugs', 'gift', 'kitchen'], newArrival: true, taxRate: 12 },
-  { name: 'Nordic Arc Floor Lamp', category: 'home-kitchen', brand: 'Terra Home', icon: 'lamp', price: 3999, mrp: 5999, cost: 1800, colors: ['Black', 'Gold'], short: 'Arched metal lamp with linen shade, warm LED.', description: 'A sculptural arc lamp that throws soft, warm light across sofas and reading nooks.', specs: [['Height', '165 cm'], ['Bulb', 'E27 LED included']], tags: ['lamp', 'decor', 'lighting'], taxRate: 18 },
-  { name: 'Insulated Steel Water Bottle', category: 'home-kitchen', brand: 'Kitchora', icon: 'bottle', price: 699, mrp: 1199, cost: 240, colors: ['Black', 'Teal', 'Pink', 'Silver'], sizes: ['750 ml', '1 L'], short: 'Keeps drinks cold 24h / hot 12h.', description: 'Double-wall vacuum insulated 304 stainless steel with a leak-proof cap.', specs: [['Material', '304 Stainless steel'], ['Cold', '24 h'], ['Hot', '12 h']], tags: ['bottle', 'hydration', 'gym'], dealHours: 26, taxRate: 18 },
-  { name: 'Handwoven Cotton Cushion Covers (Set of 2)', category: 'home-kitchen', brand: 'Terra Home', icon: 'cushion', price: 649, mrp: 999, cost: 230, colors: ['Beige', 'Teal', 'Orange'], short: 'Textured 16x16" covers with hidden zip.', description: 'Handwoven cotton covers with a tactile texture to refresh any sofa.', specs: [['Size', '16 x 16 in'], ['Material', 'Cotton']], tags: ['cushion', 'decor'], taxRate: 12 },
-  { name: 'Self-Watering Indoor Planter', category: 'home-kitchen', brand: 'Terra Home', icon: 'plant', price: 899, mrp: 1499, cost: 320, colors: ['White', 'Green'], short: 'Built-in reservoir keeps plants happy for weeks.', description: 'A minimal planter with a hidden water reservoir and level indicator.', specs: [['Diameter', '18 cm'], ['Reservoir', '600 ml']], tags: ['planter', 'decor', 'garden'], taxRate: 18 },
-  // ── Beauty
-  { name: 'Glowlab Vitamin C Serum 30ml', category: 'beauty', brand: 'Glowlab', icon: 'bottle', price: 599, mrp: 899, cost: 150, short: '15% Vitamin C + Ferulic acid for radiant skin.', description: 'A stable 15% ethyl ascorbic acid serum with ferulic acid and vitamin E to brighten and protect.', specs: [['Volume', '30 ml'], ['Skin type', 'All']], tags: ['serum', 'skincare', 'vitamin c'], featured: true, taxRate: 18 },
-  { name: 'Glowlab Hydrating Ceramide Moisturizer', category: 'beauty', brand: 'Glowlab', icon: 'jar', price: 449, mrp: 699, cost: 120, sizes: ['50 g', '100 g'], short: 'Barrier-repair cream with ceramides & hyaluronic acid.', description: 'Lightweight gel-cream that restores the skin barrier and locks in moisture for 72 hours.', specs: [['Key ingredients', 'Ceramides, HA'], ['Fragrance', 'Free']], tags: ['moisturizer', 'skincare'], newArrival: true, taxRate: 18 },
-  { name: 'Glowlab SPF 50 Sunscreen Gel', category: 'beauty', brand: 'Glowlab', icon: 'bottle', price: 399, mrp: 599, cost: 100, short: 'Invisible PA++++ protection, no white cast.', description: 'A water-light gel sunscreen with broad-spectrum SPF 50 PA++++.', specs: [['SPF', '50 PA++++'], ['Finish', 'Matte']], tags: ['sunscreen', 'skincare', 'summer'], dealHours: 40, taxRate: 18 },
-  // ── Sports
-  { name: 'FitForge Adjustable Dumbbells', category: 'sports-fitness', brand: 'FitForge', icon: 'dumbbell', price: 5999, mrp: 8999, cost: 3200, sizes: ['2-12 kg', '2-24 kg'], short: 'Replace 6 pairs of dumbbells with one dial.', description: 'Twist the dial to change weight in seconds. Durable steel plates with anti-slip handles.', specs: [['Range', '2-24 kg'], ['Increments', '2 kg']], tags: ['dumbbell', 'home gym', 'strength'], featured: true, taxRate: 18 },
-  { name: 'Pro Grip Yoga Mat 6mm', category: 'sports-fitness', brand: 'FitForge', icon: 'yogamat', price: 999, mrp: 1799, cost: 380, colors: ['Purple', 'Teal', 'Black', 'Pink'], short: 'Non-slip TPE with alignment lines and strap.', description: 'Eco-friendly TPE mat with dual-texture grip, alignment guides and a carry strap.', specs: [['Thickness', '6 mm'], ['Material', 'TPE']], tags: ['yoga', 'mat', 'fitness'], taxRate: 12 },
-  { name: 'Gym Duffel Bag with Shoe Pocket', category: 'sports-fitness', brand: 'Northpeak', icon: 'bag', price: 1299, mrp: 2299, cost: 520, colors: ['Black', 'Navy', 'Olive'], short: '40L duffel with ventilated shoe compartment.', description: 'Water-resistant, with a separate ventilated shoe pocket and wet pocket.', specs: [['Capacity', '40 L']], tags: ['gym bag', 'duffel', 'travel'], taxRate: 18 },
+const raw: Raw[] = [
+  // ── Nitrogen
+  {
+    name: 'Neem-Coated Urea (46% N)', category: 'nitrogen', brand: 'KisanGold', pack: 'bag', tone: '#1f5fa8', badge: 'N 46%', sub: 'Neem-coated urea',
+    packs: [['5 kg', 62, 80], ['10 kg', 118, 150], ['45 kg', 266, 270]],
+    short: 'Slow-release neem-coated urea for paddy, wheat, maize and sugarcane.',
+    description: 'Neem-coated prilled urea with 46% nitrogen. The neem coat slows nitrification, so more nitrogen reaches the crop and less is lost to leaching and air. Use as a top dressing in 2–3 splits instead of one heavy dose.',
+    specs: [['Nutrient', 'Nitrogen (N) 46%'], ['Form', 'Neem-coated prills'], ['Best for', 'Paddy, wheat, maize, sugarcane, vegetables'], ['Typical dose', '90–120 kg/acre in 2–3 splits (follow soil-test advice)'], ['Shelf life', '24 months']],
+    tags: ['urea', 'nitrogen', 'paddy', 'wheat'], featured: true, taxRate: 5,
+  },
+  {
+    name: 'Ammonium Sulphate (20.6% N + 24% S)', category: 'nitrogen', brand: 'TerraGro', pack: 'bag', tone: '#2b6cb0', badge: 'N 20.6 · S 24', sub: 'Nitrogen + sulphur',
+    packs: [['5 kg', 140, 190], ['25 kg', 640, 800], ['50 kg', 1180, 1500]],
+    short: 'Nitrogen plus sulphur in one bag, ideal for paddy, groundnut, mustard and tea.',
+    description: 'A fast-acting source of nitrogen with 24% sulphur, which oilseeds and pulses need for protein and oil formation. The acidifying effect also suits alkaline soils.',
+    specs: [['Nutrient', 'N 20.6%, S 24%'], ['Form', 'Crystalline granules'], ['Best for', 'Paddy, groundnut, mustard, cotton, tea'], ['Typical dose', '40–60 kg/acre'], ['Shelf life', '36 months']],
+    tags: ['ammonium sulphate', 'sulphur', 'nitrogen'], taxRate: 5,
+  },
+  {
+    name: 'Calcium Ammonium Nitrate (CAN 25% N)', category: 'nitrogen', brand: 'AgroPlus', pack: 'bag', tone: '#3b7bb8', badge: 'N 25%', sub: 'Calcium ammonium nitrate',
+    packs: [['5 kg', 135, 180], ['25 kg', 640, 820]],
+    short: 'Non-acidifying nitrogen with calcium for vegetables, fruits and cotton.',
+    description: 'Half nitrate, half ammonium nitrogen with a calcium carrier, so it works fast without souring the soil. A good choice for vegetables and fruit crops on acidic soils.',
+    specs: [['Nutrient', 'N 25% (with calcium)'], ['Form', 'Free-flowing granules'], ['Best for', 'Vegetables, fruits, cotton, potato'], ['Typical dose', '40–60 kg/acre'], ['Shelf life', '24 months']],
+    tags: ['can', 'calcium', 'nitrogen'], taxRate: 5,
+  },
+  {
+    name: 'Liquid Nano Nitrogen (4% N)', category: 'nitrogen', brand: 'NutriCrop', pack: 'bottle', tone: '#2a8bd0', badge: 'N 4%', sub: 'Nano liquid nitrogen',
+    packs: [['250 ml', 125, 135], ['500 ml', 225, 240]],
+    short: 'Foliar nano nitrogen spray for paddy, wheat, maize and vegetables.',
+    description: 'A nano-sized nitrogen formulation applied as a foliar spray at tillering and pre-flowering. Cuts the number of urea bags needed and is easy to carry to the field.',
+    specs: [['Nutrient', 'Nitrogen 4% w/w (nano)'], ['Form', 'Liquid'], ['Best for', 'Paddy, wheat, maize, vegetables'], ['Dose', '2–4 ml per litre of water, two sprays'], ['Shelf life', '24 months']],
+    tags: ['nano', 'liquid', 'foliar'], newArrival: true, dealHours: 30, taxRate: 5,
+  },
+
+  // ── DAP, SSP & Potash
+  {
+    name: 'DAP (18-46-0) Diammonium Phosphate', category: 'phosphatic-potassic', brand: 'KisanGold', pack: 'bag', tone: '#b4532a', badge: '18-46-0', sub: 'Diammonium phosphate',
+    packs: [['5 kg', 150, 175], ['25 kg', 700, 760], ['50 kg', 1350, 1350]],
+    short: 'Basal phosphorus and nitrogen for paddy, wheat, cotton, pulses and vegetables.',
+    description: 'The standard basal fertilizer for sowing. 46% phosphate drives early root growth and tillering while 18% nitrogen gives seedlings a quick start. Place near the seed row or mix into the soil before sowing.',
+    specs: [['Nutrient', 'N 18%, P₂O₅ 46%'], ['Form', 'Dark granules'], ['Best for', 'Paddy, wheat, cotton, pulses, vegetables'], ['Typical dose', '40–50 kg/acre as basal dose'], ['Shelf life', '24 months']],
+    tags: ['dap', 'phosphorus', 'basal'], featured: true, taxRate: 5,
+  },
+  {
+    name: 'Single Super Phosphate (16% P₂O₅)', category: 'phosphatic-potassic', brand: 'Vasundhara', pack: 'bag', tone: '#c26a3a', badge: 'P 16%', sub: 'SSP · with S & Ca',
+    packs: [['10 kg', 135, 180], ['50 kg', 520, 640]],
+    short: 'Phosphorus with sulphur and calcium for groundnut, soybean, pulses and paddy.',
+    description: 'Provides 16% phosphate along with 11% sulphur and 19% calcium, making it a favourite for oilseeds and legumes. Best mixed into the soil before sowing.',
+    specs: [['Nutrient', 'P₂O₅ 16%, S 11%, Ca 19%'], ['Form', 'Granular'], ['Best for', 'Groundnut, soybean, pulses, paddy'], ['Typical dose', '100–150 kg/acre basal'], ['Shelf life', '24 months']],
+    tags: ['ssp', 'phosphate', 'sulphur'], taxRate: 5,
+  },
+  {
+    name: 'Muriate of Potash MOP (60% K₂O)', category: 'phosphatic-potassic', brand: 'AgroPlus', pack: 'bag', tone: '#a43f5a', badge: 'K 60%', sub: 'Muriate of potash',
+    packs: [['5 kg', 125, 160], ['25 kg', 575, 700], ['50 kg', 1100, 1300]],
+    short: 'Potash for sugarcane, banana, potato, paddy and fruit crops.',
+    description: 'The most economical source of potassium. Improves grain filling, sugar content, fruit size and resistance to lodging and drought.',
+    specs: [['Nutrient', 'K₂O 60%'], ['Form', 'Red granules'], ['Best for', 'Sugarcane, banana, potato, paddy, fruits'], ['Typical dose', '20–40 kg/acre'], ['Shelf life', '36 months']],
+    tags: ['mop', 'potash', 'potassium'], taxRate: 5,
+  },
+  {
+    name: 'Sulphate of Potash SOP (50% K₂O + 18% S)', category: 'phosphatic-potassic', brand: 'CropMax', pack: 'bag', tone: '#c04d6f', badge: 'K 50 · S 18', sub: 'Chloride-free potash',
+    packs: [['1 kg', 75, 110], ['5 kg', 340, 450], ['25 kg', 1550, 1950]],
+    short: 'Chloride-free potash for chilli, tomato, grapes, mango and other fruits.',
+    description: 'Premium potassium for chloride-sensitive crops such as chilli, tobacco, grapes and potato. The sulphur improves flavour, colour and shelf life of produce.',
+    specs: [['Nutrient', 'K₂O 50%, S 18%'], ['Form', 'Fine granules'], ['Best for', 'Chilli, tomato, grapes, mango, potato'], ['Typical dose', '15–30 kg/acre'], ['Shelf life', '36 months']],
+    tags: ['sop', 'potash', 'chloride free'], newArrival: true, taxRate: 5,
+  },
+
+  // ── NPK Complex
+  {
+    name: 'NPK 10:26:26 Complex Fertilizer', category: 'npk-complex', brand: 'TerraGro', pack: 'bag', tone: '#2f7d3a', badge: '10:26:26', sub: 'Complex fertilizer',
+    packs: [['5 kg', 165, 210], ['25 kg', 780, 950], ['50 kg', 1470, 1750]],
+    short: 'High phosphorus and potash complex for cotton, groundnut, chilli and vegetables.',
+    description: 'A balanced granular complex that feeds all three primary nutrients in every granule. The high P and K ratio suits root, flower and fruit development.',
+    specs: [['Nutrient', 'N 10%, P₂O₅ 26%, K₂O 26%'], ['Form', 'Granular'], ['Best for', 'Cotton, groundnut, chilli, vegetables, fruits'], ['Typical dose', '50–75 kg/acre basal'], ['Shelf life', '24 months']],
+    tags: ['npk', 'complex', '10-26-26'], featured: true, taxRate: 5,
+  },
+  {
+    name: 'NPK 12:32:16 Complex Fertilizer', category: 'npk-complex', brand: 'NutriCrop', pack: 'bag', tone: '#3a8a45', badge: '12:32:16', sub: 'Complex fertilizer',
+    packs: [['5 kg', 160, 205], ['25 kg', 760, 920], ['50 kg', 1430, 1700]],
+    short: 'Phosphorus-rich starter complex for paddy, maize, wheat and sugarcane.',
+    description: 'A strong starter blend: high phosphorus for rooting and tillering, with enough nitrogen and potash to carry the crop through early growth.',
+    specs: [['Nutrient', 'N 12%, P₂O₅ 32%, K₂O 16%'], ['Form', 'Granular'], ['Best for', 'Paddy, maize, wheat, sugarcane'], ['Typical dose', '50–70 kg/acre basal'], ['Shelf life', '24 months']],
+    tags: ['npk', 'complex', '12-32-16'], taxRate: 5,
+  },
+  {
+    name: 'NPK 20:20:0:13 Ammonium Phosphate Sulphate', category: 'npk-complex', brand: 'Vasundhara', pack: 'bag', tone: '#4a9a4e', badge: '20:20:0:13', sub: 'With 13% sulphur',
+    packs: [['5 kg', 155, 195], ['25 kg', 720, 880], ['50 kg', 1360, 1620]],
+    short: 'Nitrogen, phosphorus and sulphur for cotton, groundnut, maize and chilli.',
+    description: 'Water-soluble nitrogen and phosphorus with 13% sulphur, well suited to oilseeds, cotton and chilli where sulphur is often short.',
+    specs: [['Nutrient', 'N 20%, P₂O₅ 20%, S 13%'], ['Form', 'Granular'], ['Best for', 'Cotton, groundnut, maize, chilli, sunflower'], ['Typical dose', '50–75 kg/acre'], ['Shelf life', '24 months']],
+    tags: ['npk', '20-20-0-13', 'sulphur'], taxRate: 5,
+  },
+  {
+    name: 'NPK 17:17:17 Balanced Complex', category: 'npk-complex', brand: 'AgroPlus', pack: 'bag', tone: '#27733a', badge: '17:17:17', sub: 'Balanced NPK',
+    packs: [['5 kg', 170, 215], ['25 kg', 800, 980], ['50 kg', 1510, 1800]],
+    short: 'All-round equal-ratio NPK for vegetables, fruits, paddy and pulses.',
+    description: 'Equal parts nitrogen, phosphorus and potash for crops that need steady feeding all season. Works for basal or first top dressing.',
+    specs: [['Nutrient', 'N 17%, P₂O₅ 17%, K₂O 17%'], ['Form', 'Granular'], ['Best for', 'Vegetables, fruits, paddy, pulses, flowers'], ['Typical dose', '50–75 kg/acre'], ['Shelf life', '24 months']],
+    tags: ['npk', '17-17-17', 'balanced'], taxRate: 5, dealHours: 52,
+  },
+
+  // ── Water Soluble
+  {
+    name: 'NPK 19:19:19 Water Soluble', category: 'water-soluble', brand: 'GreenLeaf Labs', pack: 'pouch', tone: '#0e8a8a', badge: '19:19:19', sub: '100% water soluble',
+    packs: [['1 kg', 320, 420], ['5 kg', 1450, 1900], ['25 kg', 6800, 8500]],
+    short: 'All-purpose soluble NPK for drip, fertigation and foliar spray on vegetables and fruits.',
+    description: 'The workhorse of fertigation. Dissolves completely with no residue, so it will not clog drip emitters. Use through drip every 7–10 days, or as a 5 g/litre foliar spray.',
+    specs: [['Nutrient', 'N 19%, P₂O₅ 19%, K₂O 19%'], ['Form', 'Crystalline powder'], ['Best for', 'Vegetables, fruits, flowers, chilli, tomato'], ['Dose', '2–3 kg/acre via drip, or 5 g/L foliar'], ['Shelf life', '36 months']],
+    tags: ['19-19-19', 'water soluble', 'fertigation', 'drip'], featured: true, newArrival: true, taxRate: 5,
+  },
+  {
+    name: 'MKP 00:52:34 Water Soluble', category: 'water-soluble', brand: 'GreenLeaf Labs', pack: 'pouch', tone: '#17999b', badge: '00:52:34', sub: 'Mono potassium phosphate',
+    packs: [['1 kg', 380, 520], ['5 kg', 1750, 2300]],
+    short: 'Flowering and fruit-set booster for grapes, pomegranate, mango and vegetables.',
+    description: 'High phosphorus and potash with no nitrogen — used at flowering to improve fruit set, size and sugar content without pushing leafy growth.',
+    specs: [['Nutrient', 'P₂O₅ 52%, K₂O 34%'], ['Form', 'White crystals'], ['Best for', 'Grapes, pomegranate, mango, tomato, chilli'], ['Dose', '2–3 kg/acre via drip, or 3–5 g/L foliar'], ['Shelf life', '36 months']],
+    tags: ['mkp', '00-52-34', 'flowering'], dealHours: 36, taxRate: 5,
+  },
+  {
+    name: 'Potassium Nitrate 13:00:45', category: 'water-soluble', brand: 'CropMax', pack: 'pouch', tone: '#1f9d8a', badge: '13:00:45', sub: 'Potassium nitrate',
+    packs: [['1 kg', 140, 190], ['5 kg', 640, 820], ['25 kg', 2950, 3600]],
+    short: 'Nitrate nitrogen with high potash for banana, chilli, grapes and sugarcane.',
+    description: 'Chloride-free source of potassium and nitrate nitrogen. Improves fruit weight, colour and shelf life, and helps crops through heat or water stress.',
+    specs: [['Nutrient', 'N 13%, K₂O 45%'], ['Form', 'White prills'], ['Best for', 'Banana, chilli, grapes, sugarcane, vegetables'], ['Dose', '3–5 kg/acre via drip, or 5–10 g/L foliar'], ['Shelf life', '36 months']],
+    tags: ['13-0-45', 'potassium nitrate', 'fertigation'], taxRate: 5,
+  },
+  {
+    name: 'MAP 12:61:00 Water Soluble', category: 'water-soluble', brand: 'NutriCrop', pack: 'pouch', tone: '#2a8f9c', badge: '12:61:00', sub: 'Mono ammonium phosphate',
+    packs: [['1 kg', 310, 400], ['5 kg', 1420, 1800]],
+    short: 'Rooting starter for transplanted vegetables, paddy nursery and young fruit trees.',
+    description: 'Very high phosphorus for strong early roots. Apply through drip or as a drench a week after transplanting.',
+    specs: [['Nutrient', 'N 12%, P₂O₅ 61%'], ['Form', 'Crystalline powder'], ['Best for', 'Vegetable seedlings, paddy nursery, young orchards'], ['Dose', '2–3 kg/acre'], ['Shelf life', '36 months']],
+    tags: ['map', '12-61-0', 'rooting'], taxRate: 5,
+  },
+  {
+    name: 'Calcium Nitrate (15.5% N + 19% Ca)', category: 'water-soluble', brand: 'AgroPlus', pack: 'pouch', tone: '#3aa08f', badge: 'N 15.5 · Ca 19', sub: 'Calcium nitrate',
+    packs: [['1 kg', 120, 160], ['5 kg', 540, 700], ['25 kg', 2500, 3100]],
+    short: 'Calcium for tomato, chilli, capsicum and pomegranate to prevent blossom-end rot and cracking.',
+    description: 'Highly soluble calcium and nitrate nitrogen. Prevents blossom-end rot in tomato and capsicum and reduces fruit cracking in pomegranate.',
+    specs: [['Nutrient', 'N 15.5%, Ca 19%'], ['Form', 'White granules'], ['Best for', 'Tomato, chilli, capsicum, pomegranate, grapes'], ['Dose', '3–5 kg/acre via drip'], ['Shelf life', '24 months']],
+    tags: ['calcium nitrate', 'calcium', 'fertigation'], taxRate: 5,
+  },
+
+  // ── Micronutrients
+  {
+    name: 'Zinc Sulphate Heptahydrate (Zn 21%)', category: 'micronutrients', brand: 'Vasundhara', pack: 'pouch', tone: '#7a4fb0', badge: 'Zn 21%', sub: 'Zinc sulphate',
+    packs: [['1 kg', 85, 120], ['5 kg', 390, 520], ['25 kg', 1750, 2200]],
+    short: 'Corrects zinc deficiency in paddy, maize, wheat and fruit trees.',
+    description: 'Fixes khaira disease in paddy and white-bud in maize. Mix with soil at transplanting or sowing, or spray 0.5% solution on standing crops.',
+    specs: [['Nutrient', 'Zinc (Zn) 21%'], ['Form', 'Free-flowing crystals'], ['Best for', 'Paddy, maize, wheat, citrus, mango'], ['Dose', '10 kg/acre soil, or 5 g/L foliar'], ['Shelf life', '36 months']],
+    tags: ['zinc', 'zn', 'micronutrient'], featured: true, dealHours: 40, taxRate: 5,
+  },
+  {
+    name: 'Chelated Multi-Micronutrient Mix (Grade II)', category: 'micronutrients', brand: 'GreenLeaf Labs', pack: 'pouch', tone: '#8a5cc0', badge: 'Zn Fe Mn Cu B', sub: 'EDTA chelated mix',
+    packs: [['250 g', 195, 260], ['1 kg', 620, 820]],
+    short: 'EDTA-chelated foliar mix of zinc, iron, manganese, copper and boron for vegetables, fruits and cotton.',
+    description: 'A complete foliar micronutrient blend in chelated form for fast absorption. Use at vegetative stage and again at flowering to prevent hidden hunger.',
+    specs: [['Nutrient', 'Zn 3%, Fe 2.5%, Mn 1%, Cu 1%, B 0.5%, Mo 0.1%'], ['Form', 'Fine powder'], ['Best for', 'Vegetables, fruits, cotton, sugarcane'], ['Dose', '1–2 g per litre of water'], ['Shelf life', '24 months']],
+    tags: ['multi micronutrient', 'chelated', 'foliar'], newArrival: true, taxRate: 5,
+  },
+  {
+    name: 'Boron 20% (Disodium Octaborate)', category: 'micronutrients', brand: 'CropMax', pack: 'pouch', tone: '#6b46a3', badge: 'B 20%', sub: 'Boron',
+    packs: [['500 g', 90, 120], ['1 kg', 165, 220], ['5 kg', 760, 980]],
+    short: 'Improves flowering, fruit set and seed filling in cotton, groundnut, vegetables and fruits.',
+    description: 'Boron is vital for pollen germination and fruit set. Spray at pre-flowering to reduce flower drop and hollow stem.',
+    specs: [['Nutrient', 'Boron (B) 20%'], ['Form', 'White powder'], ['Best for', 'Cotton, groundnut, cauliflower, mango, pomegranate'], ['Dose', '1 g per litre foliar'], ['Shelf life', '36 months']],
+    tags: ['boron', 'b', 'flowering'], taxRate: 5,
+  },
+  {
+    name: 'Ferrous Sulphate (Fe 19%)', category: 'micronutrients', brand: 'Vasundhara', pack: 'pouch', tone: '#5f3f94', badge: 'Fe 19%', sub: 'Ferrous sulphate',
+    packs: [['1 kg', 55, 80], ['5 kg', 240, 320], ['25 kg', 1050, 1350]],
+    short: 'Cures iron chlorosis (yellow leaves) in groundnut, paddy, sugarcane and fruit trees.',
+    description: 'Corrects yellowing of young leaves caused by iron deficiency, common in calcareous and alkaline soils.',
+    specs: [['Nutrient', 'Iron (Fe) 19%'], ['Form', 'Green crystals'], ['Best for', 'Groundnut, paddy, sugarcane, citrus'], ['Dose', '2.5 g/L foliar, repeated after 10 days'], ['Shelf life', '24 months']],
+    tags: ['iron', 'fe', 'chlorosis'], taxRate: 5,
+  },
+  {
+    name: 'Magnesium Sulphate (Mg 9.6%)', category: 'micronutrients', brand: 'AgroPlus', pack: 'pouch', tone: '#8e68c2', badge: 'Mg 9.6 · S 12', sub: 'Epsom salt grade',
+    packs: [['1 kg', 60, 90], ['5 kg', 260, 350], ['25 kg', 1150, 1500]],
+    short: 'Magnesium and sulphur for banana, chilli, tomato, cotton and sugarcane.',
+    description: 'Magnesium sits at the centre of chlorophyll. Correct inter-veinal yellowing of older leaves with a soil dose or foliar spray.',
+    specs: [['Nutrient', 'Mg 9.6%, S 12%'], ['Form', 'Crystalline'], ['Best for', 'Banana, chilli, tomato, cotton, sugarcane'], ['Dose', '5 g/L foliar, or 10–15 kg/acre soil'], ['Shelf life', '36 months']],
+    tags: ['magnesium', 'mg', 'epsom'], taxRate: 5,
+  },
+
+  // ── Organic & Bio
+  {
+    name: 'Premium Vermicompost', category: 'organic-bio', brand: 'BioHarvest', pack: 'bag', tone: '#7a5230', badge: 'ORGANIC', sub: 'Vermicompost',
+    packs: [['5 kg', 140, 200], ['25 kg', 520, 700], ['50 kg', 950, 1250]],
+    short: 'Sieved earthworm compost for vegetables, fruits, kitchen garden, paddy and pots.',
+    description: 'Dark, odour-free vermicompost that builds soil structure and feeds microbes. Mix into planting pits, nursery beds or pots.',
+    specs: [['Organic carbon', 'Min 18%'], ['Moisture', '15–20%'], ['Best for', 'Vegetables, fruits, flowers, kitchen garden, pots'], ['Dose', '1–2 tonnes/acre, or a handful per plant'], ['Shelf life', '12 months']],
+    tags: ['vermicompost', 'organic', 'compost'], featured: true, newArrival: true, dealHours: 28, taxRate: 0,
+  },
+  {
+    name: 'Neem Cake Powder', category: 'organic-bio', brand: 'BioHarvest', pack: 'bag', tone: '#8a6238', badge: 'N 5%', sub: 'Neem cake',
+    packs: [['5 kg', 170, 230], ['25 kg', 720, 950]],
+    short: 'Organic nitrogen that also deters soil pests and nematodes in vegetables, paddy and fruit trees.',
+    description: 'Cold-pressed neem cake feeds the soil and reduces nematodes and termites. Apply before planting and around the root zone of fruit trees.',
+    specs: [['Nutrient', 'N 5%, P 1%, K 1.5%'], ['Form', 'Fine powder'], ['Best for', 'Vegetables, paddy, fruit trees, turmeric'], ['Dose', '100–200 kg/acre'], ['Shelf life', '12 months']],
+    tags: ['neem cake', 'organic', 'nematode'], taxRate: 5,
+  },
+  {
+    name: 'Organic Manure Granules (Cow-Dung Based)', category: 'organic-bio', brand: 'Vasundhara', pack: 'bag', tone: '#6c4a2c', badge: 'ORGANIC', sub: 'Granular manure',
+    packs: [['10 kg', 220, 300], ['50 kg', 880, 1150]],
+    short: 'Easy-to-spread granular manure for paddy, vegetables, sugarcane and orchards.',
+    description: 'Composted cow-dung manure enriched with rock phosphate and pressmud, pelletised so it spreads evenly and stays odour-free.',
+    specs: [['Organic carbon', 'Min 14%'], ['Form', 'Pelletised granules'], ['Best for', 'Paddy, vegetables, sugarcane, orchards'], ['Dose', '200–400 kg/acre'], ['Shelf life', '12 months']],
+    tags: ['organic manure', 'cow dung', 'granules'], taxRate: 0,
+  },
+  {
+    name: 'Rhizobium Bio-Fertilizer (Liquid)', category: 'organic-bio', brand: 'BioHarvest', pack: 'bottle', tone: '#5e8c3a', badge: 'RHIZOBIUM', sub: 'Nitrogen-fixing culture',
+    packs: [['500 ml', 190, 250], ['1 L', 340, 450]],
+    short: 'Seed treatment culture that fixes nitrogen in groundnut, soybean, pulses and gram.',
+    description: 'Live Rhizobium culture for legumes. Treat seed just before sowing so roots form nodules that fix nitrogen from the air, cutting urea needs.',
+    specs: [['Organism', 'Rhizobium spp. (10⁸ CFU/ml)'], ['Form', 'Liquid culture'], ['Best for', 'Groundnut, soybean, pulses, gram'], ['Dose', '10 ml per kg of seed'], ['Shelf life', '6 months — store cool']],
+    tags: ['rhizobium', 'bio fertilizer', 'legume'], taxRate: 5,
+  },
+  {
+    name: 'PSB Phosphate Solubilising Bacteria (Liquid)', category: 'organic-bio', brand: 'BioHarvest', pack: 'bottle', tone: '#6a9a3e', badge: 'PSB', sub: 'Unlocks soil phosphorus',
+    packs: [['500 ml', 180, 240], ['1 L', 320, 420]],
+    short: 'Unlocks locked-up phosphorus in the soil for paddy, wheat, vegetables and cotton.',
+    description: 'Beneficial bacteria that convert fixed phosphate into forms roots can absorb. Reduces the DAP bill when used regularly.',
+    specs: [['Organism', 'Bacillus / Pseudomonas (10⁸ CFU/ml)'], ['Form', 'Liquid culture'], ['Best for', 'Paddy, wheat, vegetables, cotton'], ['Dose', '1 L/acre with manure or drip'], ['Shelf life', '6 months — store cool']],
+    tags: ['psb', 'bio fertilizer', 'phosphorus'], taxRate: 5,
+  },
+  {
+    name: 'Mycorrhiza Root Booster', category: 'organic-bio', brand: 'GreenLeaf Labs', pack: 'tub', tone: '#8b6a3a', badge: 'MYCORRHIZA', sub: 'Root colonising fungi',
+    packs: [['1 kg', 360, 480], ['5 kg', 1650, 2100]],
+    short: 'Beneficial root fungi for fruit trees, vegetables and sugarcane that stretch water and nutrient uptake.',
+    description: 'Arbuscular mycorrhizal fungi colonise roots and extend their reach, improving drought tolerance and phosphorus uptake.',
+    specs: [['Organism', 'Glomus spp. (100 propagules/g)'], ['Form', 'Granular carrier'], ['Best for', 'Fruit trees, vegetables, sugarcane, nursery'], ['Dose', '4–5 kg/acre at planting'], ['Shelf life', '12 months']],
+    tags: ['mycorrhiza', 'root', 'bio'], newArrival: true, taxRate: 5,
+  },
+
+  // ── Growth Boosters
+  {
+    name: 'Seaweed Extract Liquid (Kappaphycus)', category: 'growth-boosters', brand: 'NutriCrop', pack: 'bottle', tone: '#b07a0a', badge: 'SEAWEED', sub: 'Plant growth stimulant',
+    packs: [['250 ml', 210, 290], ['500 ml', 380, 520], ['1 L', 690, 920]],
+    short: 'Natural seaweed biostimulant that improves flowering, fruit set and stress tolerance in vegetables, grapes and paddy.',
+    description: 'Cold-extracted seaweed rich in natural cytokinins and betaines. Spray at tillering or flowering to improve vigour and recovery from heat and drought stress.',
+    specs: [['Source', 'Kappaphycus alvarezii extract'], ['Form', 'Liquid'], ['Best for', 'Vegetables, grapes, paddy, cotton'], ['Dose', '2–3 ml per litre foliar'], ['Shelf life', '24 months']],
+    tags: ['seaweed', 'biostimulant', 'foliar'], featured: true, dealHours: 20, taxRate: 18,
+  },
+  {
+    name: 'Humic + Fulvic Acid Liquid', category: 'growth-boosters', brand: 'GreenLeaf Labs', pack: 'bottle', tone: '#a06a10', badge: 'HUMIC', sub: 'Humic + fulvic acids',
+    packs: [['500 ml', 260, 350], ['1 L', 470, 640], ['5 L', 2150, 2800]],
+    short: 'Boosts root growth and nutrient uptake in sugarcane, banana, vegetables and fruit trees.',
+    description: 'A potassium-humate and fulvic blend that loosens soil, chelates nutrients and drives white-root growth. Apply with drip or as a root drench.',
+    specs: [['Content', 'Humic 12%, Fulvic 3%'], ['Form', 'Dark liquid'], ['Best for', 'Sugarcane, banana, vegetables, fruit trees'], ['Dose', '1 L/acre drip, or 2 ml/L drench'], ['Shelf life', '24 months']],
+    tags: ['humic', 'fulvic', 'root'], dealHours: 44, taxRate: 18,
+  },
+  {
+    name: 'Amino Acid Plant Booster', category: 'growth-boosters', brand: 'CropMax', pack: 'bottle', tone: '#c28a1a', badge: 'AMINO', sub: 'Protein hydrolysate',
+    packs: [['250 ml', 180, 250], ['500 ml', 330, 450], ['1 L', 610, 820]],
+    short: 'Quick-recovery amino acids for stressed cotton, chilli, tomato and paddy.',
+    description: 'Free amino acids that plants absorb directly through leaves — a fast pick-me-up after transplanting shock, hail, heat or pesticide stress.',
+    specs: [['Content', 'Free amino acids 40%'], ['Form', 'Liquid'], ['Best for', 'Cotton, chilli, tomato, paddy, vegetables'], ['Dose', '2 ml per litre foliar'], ['Shelf life', '24 months']],
+    tags: ['amino acid', 'stress', 'foliar'], taxRate: 18,
+  },
+  {
+    name: 'Flowering & Fruit-Set Booster', category: 'growth-boosters', brand: 'AgroPlus', pack: 'bottle', tone: '#d19a2a', badge: 'FRUIT SET', sub: 'Reduces flower drop',
+    packs: [['100 ml', 150, 210], ['250 ml', 340, 470]],
+    short: 'Cuts flower drop and improves fruit set in tomato, chilli, brinjal, mango and pomegranate.',
+    description: 'A balanced plant growth regulator blend with boron and zinc to hold flowers and set more fruit during hot weather.',
+    specs: [['Content', 'Triacontanol + B + Zn'], ['Form', 'Liquid'], ['Best for', 'Tomato, chilli, brinjal, mango, pomegranate'], ['Dose', '1 ml per litre at flowering'], ['Shelf life', '24 months']],
+    tags: ['flowering', 'fruit set', 'pgr'], newArrival: true, taxRate: 18,
+  },
+
+  // ── Soil Care
+  {
+    name: 'Agricultural Gypsum (Ca 22% + S 17%)', category: 'soil-care', brand: 'Vasundhara', pack: 'bag', tone: '#5b6b4e', badge: 'Ca 22 · S 17', sub: 'Gypsum soil conditioner',
+    packs: [['10 kg', 90, 130], ['50 kg', 360, 480]],
+    short: 'Loosens clay and sodic soils; supplies calcium and sulphur for groundnut, paddy and vegetables.',
+    description: 'Improves water infiltration in compacted or sodic soils and feeds groundnut pods with calcium. Apply at sowing or pegging stage.',
+    specs: [['Nutrient', 'Ca 22%, S 17%'], ['Form', 'Fine granules'], ['Best for', 'Groundnut, paddy, sodic and clay soils'], ['Dose', '200–400 kg/acre'], ['Shelf life', 'Indefinite']],
+    tags: ['gypsum', 'calcium', 'sodic soil'], taxRate: 5,
+  },
+  {
+    name: 'Dolomite Lime (Soil pH Corrector)', category: 'soil-care', brand: 'TerraGro', pack: 'bag', tone: '#6f7d5c', badge: 'Ca · Mg', sub: 'Lime for acidic soils',
+    packs: [['10 kg', 100, 140], ['50 kg', 420, 560]],
+    short: 'Raises pH of acidic soils and adds calcium and magnesium for tea, coffee, paddy and vegetables.',
+    description: 'Ground dolomite that neutralises soil acidity and supplies calcium plus magnesium. Apply 2–3 weeks before sowing.',
+    specs: [['Nutrient', 'CaO 30%, MgO 18%'], ['Form', 'Fine powder'], ['Best for', 'Acidic soils, tea, coffee, paddy, vegetables'], ['Dose', '200–400 kg/acre (based on soil pH)'], ['Shelf life', 'Indefinite']],
+    tags: ['lime', 'dolomite', 'ph', 'acidic soil'], taxRate: 5,
+  },
+  {
+    name: 'Soil Health Test Kit (pH, N, P, K)', category: 'soil-care', brand: 'GreenLeaf Labs', pack: 'box', tone: '#4f6a46', badge: 'SOIL TEST', sub: '25 tests · pH N P K',
+    packs: [['25 tests', 599, 799], ['50 tests', 1049, 1399]],
+    short: 'Test your field soil in minutes and get a fertilizer plan for paddy, cotton, vegetables and fruits.',
+    description: 'A field-ready kit with reagents and colour charts for pH, nitrogen, phosphorus and potassium. Know what the soil needs before you spend on bags.',
+    specs: [['Tests', 'pH, N, P, K'], ['Includes', 'Reagents, colour charts, spoon, guide'], ['Best for', 'All crops'], ['Time per test', 'About 10 minutes'], ['Shelf life', '18 months']],
+    tags: ['soil test', 'kit', 'ph'], featured: true, taxRate: 18,
+  },
+];
+
+export const products: SeedProduct[] = raw.map((r) => ({
+  ...r,
+  price: r.packs[0][1],
+  mrp: r.packs[0][2],
+  cost: Math.round(r.packs[0][1] * 0.74),
+}));
+
+/** Crops shown as "Shop by crop" tiles; `q` is the search term used for the link. */
+export interface SeedCrop {
+  name: string;
+  q: string;
+  slug: string;
+  tint: string;
+}
+export const crops: SeedCrop[] = [
+  { name: 'Paddy', q: 'paddy', slug: 'paddy', tint: '#e9efc8' },
+  { name: 'Wheat', q: 'wheat', slug: 'wheat', tint: '#f6e6b8' },
+  { name: 'Cotton', q: 'cotton', slug: 'cotton', tint: '#e8eef6' },
+  { name: 'Maize', q: 'maize', slug: 'maize', tint: '#fbeab0' },
+  { name: 'Sugarcane', q: 'sugarcane', slug: 'sugarcane', tint: '#dcefd0' },
+  { name: 'Vegetables', q: 'vegetables', slug: 'vegetables', tint: '#fbe0d6' },
+  { name: 'Fruits', q: 'fruits', slug: 'fruits', tint: '#fbe3c8' },
+  { name: 'Pulses', q: 'pulses', slug: 'pulses', tint: '#efe3cf' },
 ];
 
 export const banners = [
-  { title: 'The Festive Edit', subtitle: 'Up to 60% off on fashion, footwear & accessories', link: '/shop?category=fashion', ctaText: 'Shop the sale', palette: ['#111827', '#7c3aed', '#f472b6'] },
-  { title: 'Upgrade Your Tech', subtitle: 'Flagship phones, laptops & audio — no-cost EMI available', link: '/shop?category=electronics', ctaText: 'Explore electronics', palette: ['#0f172a', '#2563eb', '#22d3ee'] },
-  { title: 'Home, Reimagined', subtitle: 'Cookware, lighting & decor starting ₹499', link: '/shop?category=home-kitchen', ctaText: 'Refresh your space', palette: ['#1c1917', '#ea580c', '#fbbf24'] },
+  { title: 'Healthier soil. Bigger harvest.', subtitle: 'Genuine fertilizers delivered to your farm gate. Cash on Delivery available.', link: '/shop', ctaText: 'Shop fertilizers', art: 'sunrise' as const, pack: 'bag' as PackKind, tone: '#2f7d3a', badge: '10:26:26' },
+  { title: 'Kharif season, sorted.', subtitle: 'DAP, NPK and Urea in 5 kg to 50 kg packs. Stock up before sowing.', link: '/shop?category=npk-complex', ctaText: 'Shop NPK complex', art: 'field' as const, pack: 'bag' as PackKind, tone: '#b4532a', badge: '18-46-0' },
+  { title: 'Grow organic.', subtitle: 'Vermicompost, neem cake and bio-fertilizers from ₹140.', link: '/shop?category=organic-bio', ctaText: 'Shop organic', art: 'organic' as const, pack: 'bag' as PackKind, tone: '#7a5230', badge: 'ORGANIC' },
 ];
 
-export const firstNames = ['Aarav', 'Vivaan', 'Aditya', 'Vihaan', 'Arjun', 'Sai', 'Reyansh', 'Krishna', 'Ishaan', 'Rohan', 'Ananya', 'Diya', 'Saanvi', 'Aadhya', 'Pari', 'Anika', 'Navya', 'Meera', 'Kavya', 'Riya', 'Priya', 'Neha', 'Rahul', 'Karthik', 'Sneha', 'Lakshmi', 'Harsha', 'Divya', 'Varun', 'Pooja'];
-export const lastNames = ['Sharma', 'Reddy', 'Patel', 'Iyer', 'Nair', 'Gupta', 'Rao', 'Singh', 'Kumar', 'Menon', 'Das', 'Joshi', 'Verma', 'Naidu', 'Pillai'];
+export const firstNames = ['Ramesh', 'Suresh', 'Mahesh', 'Venkat', 'Srinivas', 'Raju', 'Narsimha', 'Ravi', 'Anil', 'Prakash', 'Lakshmi', 'Sunitha', 'Padma', 'Savitha', 'Radha', 'Kavitha', 'Rahul', 'Karthik', 'Harsha', 'Naresh', 'Bhaskar', 'Mallesh', 'Sai', 'Vijay', 'Anand', 'Swathi', 'Divya', 'Manoj', 'Ganesh', 'Yadagiri'];
+export const lastNames = ['Reddy', 'Naidu', 'Rao', 'Goud', 'Patel', 'Singh', 'Yadav', 'Kumar', 'Chowdary', 'Gowda', 'Verma', 'Patil', 'Shetty', 'Pillai', 'Das'];
 export const cities: [string, string, string][] = [
-  ['Hyderabad', 'Telangana', '500081'],
-  ['Bengaluru', 'Karnataka', '560034'],
-  ['Mumbai', 'Maharashtra', '400050'],
-  ['Delhi', 'Delhi', '110017'],
-  ['Chennai', 'Tamil Nadu', '600040'],
-  ['Pune', 'Maharashtra', '411014'],
-  ['Kolkata', 'West Bengal', '700091'],
-  ['Ahmedabad', 'Gujarat', '380015'],
-  ['Jaipur', 'Rajasthan', '302017'],
-  ['Kochi', 'Kerala', '682024'],
-  ['Visakhapatnam', 'Andhra Pradesh', '530017'],
-  ['Lucknow', 'Uttar Pradesh', '226010'],
   ['Karimnagar', 'Telangana', '505001'],
+  ['Warangal', 'Telangana', '506002'],
+  ['Nizamabad', 'Telangana', '503001'],
+  ['Guntur', 'Andhra Pradesh', '522001'],
+  ['Vijayawada', 'Andhra Pradesh', '520010'],
+  ['Nashik', 'Maharashtra', '422001'],
+  ['Pune', 'Maharashtra', '411014'],
+  ['Belagavi', 'Karnataka', '590001'],
+  ['Mysuru', 'Karnataka', '570001'],
+  ['Coimbatore', 'Tamil Nadu', '641001'],
+  ['Ludhiana', 'Punjab', '141001'],
+  ['Karnal', 'Haryana', '132001'],
   ['Indore', 'Madhya Pradesh', '452010'],
+  ['Hyderabad', 'Telangana', '500081'],
 ];
 
 export const reviewSnippets: [number, string, string][] = [
-  [5, 'Absolutely love it', 'Exceeded my expectations. Quality is top notch and delivery was super quick.'],
-  [5, 'Worth every rupee', 'Great value for money. Packaging was premium and the product feels durable.'],
-  [4, 'Very good', 'Really good overall. Took a day longer to arrive but the product itself is excellent.'],
-  [4, 'Nice quality', 'Good build and finish. Would recommend to friends and family.'],
-  [5, 'Perfect gift', 'Bought this as a gift and they loved it. Will order again.'],
-  [3, 'Decent', 'It is okay for the price. Expected slightly better finishing.'],
-  [4, 'Comfortable and stylish', 'Fits well and looks exactly like the pictures.'],
-  [2, 'Not as expected', 'Colour was a little different from the photos. Support helped with the exchange though.'],
-  [5, 'Best purchase this year', 'Using it daily and it still feels brand new. Highly recommended!'],
+  [5, 'Genuine and fresh stock', 'Bag was sealed with a proper batch number. Granules were dry and free-flowing. Crop response was visible in two weeks.'],
+  [5, 'Good yield this season', 'Used as a basal dose and saw better tillering than last year. Delivery to the village came in four days.'],
+  [4, 'Value for money', 'Price is lower than the local shop and packing was strong. One bag had a small tear but support replaced it quickly.'],
+  [4, 'Works as described', 'Dissolves fully in the drip tank with no clogging. Plants greened up within a week of the first dose.'],
+  [5, 'Very helpful guidance', 'The dosage notes and WhatsApp support helped me avoid over-application. Will order again for rabi.'],
+  [3, 'Okay, slow delivery', 'Product is fine but the courier took a week to reach us. Packaging was good.'],
+  [4, 'Good quality', 'Matches the grade on the label. Easy to spread and no dust.'],
+  [2, 'Pack was damaged', 'Outer bag was torn on arrival. Support refunded the amount without much hassle.'],
+  [5, 'Best purchase for my field', 'Soil test kit and fertilizer plan saved me money this season. Highly recommended.'],
 ];

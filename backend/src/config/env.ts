@@ -28,7 +28,7 @@ const schema = z.object({
 
   GMAIL_USER: z.string().optional().default(''),
   GMAIL_APP_PASSWORD: z.string().optional().default(''),
-  EMAIL_FROM_NAME: z.string().default('ShopNest'),
+  EMAIL_FROM_NAME: z.string().default('Verdant'),
 
   SMS_PROVIDER: z.enum(['twilio', 'msg91', 'console']).default('console'),
   TWILIO_ACCOUNT_SID: z.string().optional().default(''),

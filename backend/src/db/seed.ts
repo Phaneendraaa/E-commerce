@@ -75,7 +75,7 @@ async function main() {
 
   const addressRows = customers.map((c) => {
     const [city, state, pincode] = pick(data.cities);
-    return { userId: c.id, fullName: c.name, phone: c.phone!.slice(3), line1: `${int(1, 999)}, ${pick(['MG Road', 'Park Street', 'Lake View Colony', 'Jubilee Hills', 'Indiranagar', 'Banjara Hills', 'Anna Nagar', 'Salt Lake'])}`, line2: `Near ${pick(['Metro Station', 'City Mall', 'Central Park', 'Bus Stand'])}`, city, state, pincode, isDefault: true };
+    return { userId: c.id, fullName: c.name, phone: c.phone!.slice(3), line1: `${int(1, 999)}, ${pick(['Main Road', 'Temple Street', 'Market Yard Road', 'Canal Road', 'Bus Stand Road', 'Panchayat Office Road', 'Rythu Bazaar Road', 'Mandal Office Road'])}`, line2: `Near ${pick(['Bus Stand', 'Grain Market', 'Primary School', 'Rythu Seva Kendram'])}`, city, state, pincode, isDefault: true };
   });
   const addresses = await db.insert(s.addresses).values(addressRows).returning();
   const addressByUser = new Map(addresses.map((a) => [a.userId, a]));
@@ -101,19 +101,13 @@ async function main() {
   const productRows: (typeof s.products.$inferSelect)[] = [];
 
   for (const [pi, p] of data.products.entries()) {
-    const { images, byColor } = productImagePaths(p);
-    const optionNames: string[] = [];
-    const dims: { name: string; values: string[] }[] = [];
-    if (p.colors?.length) dims.push({ name: 'Color', values: p.colors });
-    if (p.sizes?.length) dims.push({ name: 'Size', values: p.sizes });
-    if (p.storage?.length) dims.push({ name: 'Storage', values: p.storage });
-    dims.forEach((d) => optionNames.push(d.name));
+    const { images } = productImagePaths(p);
+    const dims: { name: string; values: string[] }[] = [{ name: 'Pack size', values: p.packs.map((x) => x[0]) }];
+    const optionNames = dims.map((d) => d.name);
 
-    // Cartesian product of option values
-    let combos: Record<string, string>[] = [{}];
-    for (const d of dims) combos = combos.flatMap((c) => d.values.map((v) => ({ ...c, [d.name]: v })));
+    // One variant per pack size
+    const combos: Record<string, string>[] = p.packs.map(([label]) => ({ 'Pack size': label }));
 
-    const mrpRatio = (p.mrp ?? p.price) / p.price;
     const createdAt = new Date(now - (p.newArrival ? int(2, 20) : int(60, 200)) * DAY);
     const [prod] = await db
       .insert(s.products)
@@ -142,19 +136,19 @@ async function main() {
     productRows.push(prod);
 
     const variantRows = combos.map((combo, vi) => {
-      const storageIdx = combo.Storage ? p.storage!.indexOf(combo.Storage) : 0;
-      const price = Math.round(p.price * (1 + storageIdx * 0.18)) * 100;
+      const [, packPrice, packMrp] = p.packs[vi];
+      const price = packPrice * 100;
       const stockRoll = rand();
       return {
         productId: prod.id,
-        sku: `${p.brand.slice(0, 3).toUpperCase()}-${String(pi + 1).padStart(3, '0')}-${String(vi + 1).padStart(2, '0')}`,
-        title: Object.values(combo).join(' / ') || 'Default',
+        sku: `${p.brand.replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase()}-${String(pi + 1).padStart(3, '0')}-${String(vi + 1).padStart(2, '0')}`,
+        title: combo['Pack size'],
         options: combo,
         price,
-        compareAtPrice: p.mrp ? Math.round((price * mrpRatio) / 100) * 100 : null,
-        costPrice: p.cost ? Math.round(p.cost * (1 + storageIdx * 0.15)) * 100 : Math.round(price * 0.55),
-        stock: stockRoll < 0.08 ? 0 : stockRoll < 0.18 ? int(1, 4) : int(8, 80),
-        image: combo.Color ? byColor[combo.Color] ?? null : null,
+        compareAtPrice: packMrp > packPrice ? packMrp * 100 : null,
+        costPrice: Math.round(packPrice * 0.74) * 100,
+        stock: stockRoll < 0.06 ? 0 : stockRoll < 0.16 ? int(1, 6) : int(10, 120),
+        image: null,
       };
     });
     const variants = await db.insert(s.productVariants).values(variantRows).returning();
@@ -166,9 +160,9 @@ async function main() {
   await db.insert(s.coupons).values([
     { code: 'WELCOME10', description: '10% off your first order (up to ₹300)', type: 'PERCENT', value: 10, maxDiscount: 30000, firstOrderOnly: true },
     { code: 'FLAT200', description: '₹200 off on orders above ₹1,499', type: 'FLAT', value: 20000, minOrderValue: 149900, perUserLimit: 3 },
-    { code: 'FESTIVE25', description: '25% off on orders above ₹2,999 (up to ₹1,000)', type: 'PERCENT', value: 25, maxDiscount: 100000, minOrderValue: 299900, perUserLimit: 2, endsAt: new Date(now + 20 * DAY) },
+    { code: 'SEASON10', description: '10% off on orders above ₹3,000 (up to ₹600)', type: 'PERCENT', value: 10, maxDiscount: 60000, minOrderValue: 300000, perUserLimit: 2, endsAt: new Date(now + 20 * DAY) },
     { code: 'FREESHIP', description: 'Free shipping on any order', type: 'FREE_SHIPPING', value: 0, perUserLimit: 5 },
-    { code: 'TECH500', description: '₹500 off electronics above ₹9,999', type: 'FLAT', value: 50000, minOrderValue: 999900, applicableCategoryIds: [catIds.get('electronics')!], perUserLimit: 1 },
+    { code: 'ORGANIC100', description: '₹100 off organic & bio products above ₹999', type: 'FLAT', value: 10000, minOrderValue: 99900, applicableCategoryIds: [catIds.get('organic-bio')!], perUserLimit: 1 },
     { code: 'VIP15', description: 'Private: 15% off for loyal customers', type: 'PERCENT', value: 15, maxDiscount: 150000, isPublic: false, perUserLimit: 1 },
   ]);
 
@@ -178,12 +172,12 @@ async function main() {
 
   const policy = (title: string, body: string) => `# ${title}\n\n${body}`;
   await db.insert(s.pages).values([
-    { slug: 'about', title: 'About Us', content: policy('About Us', `We started with a simple idea: great products, honest prices and service that actually cares.\n\n## Our promise\n\n- **Quality first** — every product is curated and quality-checked.\n- **Fast delivery** — most orders ship within 24 hours.\n- **Easy returns** — not happy? Return within ${defaultSettings.returnWindowDays} days.\n- **Secure payments** — UPI, cards, netbanking and Cash on Delivery.`) },
-    { slug: 'shipping-policy', title: 'Shipping Policy', content: policy('Shipping Policy', '- Orders are processed within 24 hours on business days.\n- Free shipping on orders above ₹499; a flat ₹49 fee applies otherwise.\n- Metro cities: 2–3 days. Rest of India: 4–7 days.\n- You will receive tracking details by email, SMS and WhatsApp as soon as your order ships.') },
-    { slug: 'returns-policy', title: 'Returns & Refunds', content: policy('Returns & Refunds', `- Return any unused item within ${defaultSettings.returnWindowDays} days of delivery.\n- Start a return from **My Orders**; we arrange pickup.\n- Refunds for prepaid orders go back to the original payment method within 5–7 business days.\n- COD refunds are issued to your bank account or as store credit.`) },
+    { slug: 'about', title: 'About Us', content: policy('About Us', `We supply farmers and gardeners with genuine fertilizers, micronutrients and bio-inputs at fair prices, delivered to the farm gate.\n\n## Our promise\n\n- **Genuine stock** — sealed bags with batch numbers, bought from licensed manufacturers.\n- **Right advice** — dosage notes on every product and WhatsApp support from agri-trained staff.\n- **Fast delivery** — most orders ship within 24 hours.\n- **Easy payments** — UPI, cards, netbanking and Cash on Delivery.`) },
+    { slug: 'shipping-policy', title: 'Shipping Policy', content: policy('Shipping Policy', '- Orders are processed within 24 hours on business days.\n- Free shipping on orders above ₹999; a flat ₹79 fee applies otherwise.\n- Nearby districts: 2–3 days. Rest of India: 4–8 days.\n- You will receive tracking details by SMS and WhatsApp as soon as your order ships.\n- Please check the bags at the time of delivery and tell us about any damage within 48 hours.') },
+    { slug: 'returns-policy', title: 'Returns & Refunds', content: policy('Returns & Refunds', `- Sealed, unopened packs can be returned within ${defaultSettings.returnWindowDays} days of delivery.\n- Damaged, leaking or wrong items are replaced or refunded in full. Share a photo on WhatsApp.\n- Opened fertilizers, liquids and bio-cultures cannot be returned because they are perishable.\n- Refunds for prepaid orders go back to the original payment method within 5–7 business days.`) },
     { slug: 'privacy-policy', title: 'Privacy Policy', content: policy('Privacy Policy', 'We collect only the information needed to process your orders and improve your experience. We never sell your data. Payment details are processed by our PCI-DSS compliant payment partner and are never stored on our servers. You can request deletion of your account at any time by contacting support.') },
-    { slug: 'terms', title: 'Terms & Conditions', content: policy('Terms & Conditions', 'By using this website you agree to these terms. Prices and availability are subject to change without notice. We reserve the right to cancel orders in case of pricing errors or suspected fraud, with a full refund.') },
-    { slug: 'faq', title: 'FAQs', content: policy('Frequently Asked Questions', '### How do I track my order?\nGo to **My Orders** and open your order — you\'ll find the courier and tracking link. We also send updates on WhatsApp.\n\n### Is Cash on Delivery available?\nYes, on most pincodes for orders up to ₹10,000.\n\n### How do I use a coupon?\nApply it in your cart or at checkout. Only one coupon can be used per order.\n\n### How do loyalty points work?\nEarn 1 point per ₹100 spent. Each point is worth ₹1 on future orders (up to 20% of the order value).') },
+    { slug: 'terms', title: 'Terms & Conditions', content: policy('Terms & Conditions', 'By using this website you agree to these terms. Prices and availability are subject to change without notice. We reserve the right to cancel orders in case of pricing errors or suspected fraud, with a full refund. Fertilizer dosages shown on the site are indicative; follow your soil test report and local agriculture department advice.') },
+    { slug: 'faq', title: 'FAQs', content: policy('Frequently Asked Questions', '### Are the fertilizers genuine?\nYes. Every pack is sealed and carries the manufacturer batch number, manufacturing date and fertilizer grade.\n\n### How much should I apply?\nDosage notes are on each product page. For best results, test your soil first and follow the report. WhatsApp us your crop and acreage if you need help.\n\n### Is Cash on Delivery available?\nYes, on most pincodes for orders up to ₹10,000.\n\n### How do I track my order?\nGo to **My Orders** and open your order. You will find the courier and tracking link, and we also send updates on WhatsApp.\n\n### How do I use a coupon?\nApply it in your cart or at checkout. Only one coupon can be used per order.') },
   ]);
 
   // ───────── Orders (≈4 months, growing) ─────────
@@ -234,7 +228,7 @@ async function main() {
         const prod = pickProduct();
         const v = pick(variantsByProduct.get(prod.id)!);
         const existing = lines.get(v.id);
-        lines.set(v.id, { v, qty: (existing?.qty ?? 0) + (chance(0.85) ? 1 : 2) });
+        lines.set(v.id, { v, qty: (existing?.qty ?? 0) + (chance(0.55) ? 1 : chance(0.6) ? 2 : int(3, 5)) });
       }
 
       let subtotal = 0;
@@ -252,9 +246,9 @@ async function main() {
       if (!firstOrderDone.has(user.id) && chance(0.5)) {
         couponCode = 'WELCOME10';
         discount = Math.min(Math.round(subtotal * 0.1), 30000);
-      } else if (subtotal >= 299900 && chance(0.25)) {
-        couponCode = 'FESTIVE25';
-        discount = Math.min(Math.round(subtotal * 0.25), 100000);
+      } else if (subtotal >= 300000 && chance(0.25)) {
+        couponCode = 'SEASON10';
+        discount = Math.min(Math.round(subtotal * 0.1), 60000);
       } else if (subtotal >= 149900 && chance(0.2)) {
         couponCode = 'FLAT200';
         discount = 20000;
@@ -410,8 +404,8 @@ async function main() {
   const qaRows = productRows.slice(0, 12).map((p, i) => ({
     productId: p.id,
     userId: customers[i].id,
-    question: pick(['Is this true to size?', 'Does it come with a warranty?', 'Is the colour exactly as shown?', 'How long does the battery last?', 'Is it suitable for daily use?']),
-    answer: chance(0.75) ? pick(['Yes, it fits true to size. We recommend your usual size.', 'Yes, it comes with a 1-year manufacturer warranty.', 'The colour is very close to the photos, slight variation due to screen settings.', 'Absolutely — it is designed for everyday use.']) : null,
+    question: pick(['Is this suitable for paddy?', 'How much should I use per acre?', 'Can I mix this with other fertilizers?', 'What is the shelf life?', 'Can I use it through drip irrigation?']),
+    answer: chance(0.75) ? pick(['Yes, it works well for paddy. Follow the dosage on the product page.', 'Typically 40–50 kg per acre as a basal dose. For exact quantity please follow your soil test.', 'It can be mixed with most fertilizers, but do not pre-mix with calcium-based products.', 'Shelf life is printed on the bag. Store in a cool, dry place away from moisture.', 'Yes, it dissolves fully and is suitable for drip and foliar use.']) : null,
     answeredAt: new Date(),
   }));
   await db.insert(s.questions).values(qaRows);

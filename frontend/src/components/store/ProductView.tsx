@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { Banknote, Bell, Heart, MapPin, RotateCcw, Share2, ShieldCheck, ShoppingBag, Truck, Zap } from 'lucide-react';
+import { Banknote, Bell, Heart, MapPin, RotateCcw, Share2, ShieldCheck, ShoppingCart, Sprout, Truck, Zap } from 'lucide-react';
 import type { ProductDetail, StoreSettings, Variant } from '@/lib/types';
 import { api, errorMessage } from '@/lib/api';
 import { date, inr } from '@/lib/format';
 import { track } from '@/lib/track';
-import { Countdown, Img, Price, QtyStepper, Sheet, Spinner, Stars } from '@/components/ui';
+import { Countdown, Img, Price, QtyStepper, Sheet, Spinner } from '@/components/ui';
+import { RatingPill } from './ProductCard';
 import { useCart } from '@/store/cart';
 import { useWishlist } from '@/store/wishlist';
 import { useAuth } from '@/store/auth';
@@ -93,188 +94,214 @@ export function ProductView({ product: p, settings }: { product: ProductDetail; 
     }
   };
 
+  const card = '-mx-3 border-y border-line bg-surface p-3 md:mx-0 md:rounded-[var(--radius)] md:border md:p-5';
+  const single = p.optionNames.length === 1;
+  const priceOf = (name: string, value: string) => (single ? p.variants.find((v) => v.options[name] === value)?.price : undefined);
+  const glance = p.specs.filter((x) => /^(nutrient|best for|typical dose|dose)/i.test(x.label)).slice(0, 3);
+
   return (
-    <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
+    <div className="mt-2 grid gap-2 md:mt-3 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,1fr)] lg:gap-5">
       {/* Gallery */}
-      <div className="lg:sticky lg:top-24 lg:self-start">
-        <div className="flex flex-col-reverse gap-3 md:flex-row">
-          <div className="scrollbar-none flex gap-2 overflow-x-auto md:w-[76px] md:flex-col">
-            {images.map((src, i) => (
-              <button key={src} onClick={() => setImgIdx(i)} aria-label={`Show image ${i + 1}`} className={`shrink-0 overflow-hidden rounded-[var(--radius-sm)] bg-tile ring-offset-2 ${i === imgIdx ? 'ring-2 ring-ink' : 'ring-1 ring-transparent hover:ring-line'}`}>
-                <Img src={src} alt="" className="size-16 object-cover md:size-[76px]" />
+      <div className="lg:sticky lg:top-28 lg:self-start">
+        <div className="-mx-3 border-y border-line bg-surface p-0 md:mx-0 md:rounded-[var(--radius)] md:border md:p-3">
+          <div className="flex flex-col-reverse gap-2 md:flex-row md:gap-3">
+            <div className="scrollbar-none flex gap-2 overflow-x-auto px-3 pb-3 md:w-[68px] md:flex-col md:p-0">
+              {images.map((src, i) => (
+                <button key={src} onClick={() => setImgIdx(i)} aria-label={`Show image ${i + 1}`} className={`shrink-0 overflow-hidden rounded-[var(--radius-sm)] bg-tile ${i === imgIdx ? 'ring-2 ring-ink' : 'ring-1 ring-line hover:ring-ink/50'}`}>
+                  <Img src={src} alt="" className="size-14 object-cover md:size-[68px]" />
+                </button>
+              ))}
+            </div>
+            <div className="relative flex-1 overflow-hidden bg-tile md:rounded-[var(--radius-sm)]">
+              <button onClick={() => setZoom(true)} className="block w-full cursor-zoom-in" aria-label="Zoom image">
+                <Img src={images[imgIdx]} alt={p.name} className="aspect-square w-full object-cover" />
               </button>
-            ))}
+              {p.discountPercent >= 10 && <span className="absolute left-0 top-3 rounded-r-[6px] bg-peacock px-2.5 py-1 text-[12px] font-bold text-white">{p.discountPercent}% OFF</span>}
+              <div className="absolute right-3 top-3 flex flex-col gap-2">
+                <button onClick={() => toggleWish(p.id, p.name)} aria-pressed={saved} aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'} className={`grid size-9 place-items-center rounded-full bg-surface shadow ${saved ? 'text-rose' : 'text-muted hover:text-rose'}`}>
+                  <Heart size={17} fill={saved ? 'currentColor' : 'none'} />
+                </button>
+                <button onClick={share} aria-label="Share" className="grid size-9 place-items-center rounded-full bg-surface text-muted shadow hover:text-ink">
+                  <Share2 size={16} />
+                </button>
+              </div>
+            </div>
           </div>
-          <button onClick={() => setZoom(true)} className="relative flex-1 cursor-zoom-in overflow-hidden rounded-[var(--radius-lg)] bg-tile" aria-label="Zoom image">
-            <Img src={images[imgIdx]} alt={p.name} className="aspect-square w-full object-cover" />
-            {p.discountPercent >= 10 && <span className="absolute left-4 top-4 rounded-full bg-rose px-3 py-1 text-sm font-bold text-white">−{p.discountPercent}%</span>}
-          </button>
         </div>
       </div>
 
       {/* Buy box */}
-      <div>
-        {p.brand && (
-          <a href={`/shop?brand=${p.brand.slug}`} className="text-sm font-semibold text-peacock hover:underline">
-            {p.brand.name}
-          </a>
-        )}
-        <h1 className="mt-1 text-[30px] leading-[1.05] md:text-[42px]">{p.name}</h1>
-        {p.ratingCount > 0 && (
-          <a href="#reviews" className="mt-3 inline-flex items-center gap-2 text-sm">
-            <Stars value={p.ratingAvg} size={16} />
-            <span className="font-semibold">{p.ratingAvg.toFixed(1)}</span>
-            <span className="text-muted underline underline-offset-2">{p.ratingCount} reviews</span>
-            {p.soldCount > 20 && <span className="text-muted">· {p.soldCount}+ sold</span>}
-          </a>
-        )}
-
-        <div className="mt-5">
-          <Price price={price} compareAt={compare} size="xl" />
-          <p className="mt-1 text-xs text-muted">Inclusive of all taxes</p>
-        </div>
-
-        {dealLive && (
-          <div className="mt-4 flex items-center gap-3 rounded-[var(--radius-sm)] bg-marigold-soft px-4 py-3 text-sm">
-            <Zap size={18} className="text-[#b07a00]" fill="currentColor" />
-            <span className="font-semibold">Deal of the day ends in</span>
-            <Countdown to={p.dealEndsAt!} />
-          </div>
-        )}
-
-        {p.shortDescription && <p className="mt-5 text-[15px] text-muted">{p.shortDescription}</p>}
-
-        {/* Options */}
-        <div className="mt-6 space-y-5">
-          {p.optionNames.map((name) => (
-            <div key={name}>
-              <div className="mb-2.5 text-sm">
-                <span className="font-semibold">{name}:</span> <span className="text-muted">{sel[name] ?? 'Choose'}</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {p.optionValues[name].map((value) => {
-                  const active = sel[name] === value;
-                  const avail = valueAvailable(name, value);
-                  if (name === 'Color' && SWATCH[value]) {
-                    return (
-                      <button
-                        key={value}
-                        onClick={() => choose(name, value)}
-                        title={avail ? value : `${value} — out of stock`}
-                        aria-label={value}
-                        aria-pressed={active}
-                        className={`relative size-10 rounded-full ring-offset-2 transition ${active ? 'ring-2 ring-ink' : 'ring-1 ring-line hover:ring-ink'} ${avail ? '' : 'opacity-40'}`}
-                        style={{ background: SWATCH[value] }}
-                      >
-                        {!avail && <span className="absolute left-1/2 top-1/2 h-[2px] w-10 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-ink/60" />}
-                      </button>
-                    );
-                  }
-                  return (
-                    <button
-                      key={value}
-                      onClick={() => choose(name, value)}
-                      aria-pressed={active}
-                      className={`h-10 min-w-12 rounded-[var(--radius-sm)] border-[1.5px] px-3.5 text-sm font-medium transition ${active ? 'border-ink bg-ink text-white' : 'border-line bg-surface hover:border-ink'} ${avail ? '' : 'text-faint line-through'}`}
-                    >
-                      {value}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Stock + actions */}
-        <div className="mt-6">
-          {variant && variant.lowStock && <p className="mb-3 text-sm font-semibold text-rose">Hurry — only {variant.stock} left in stock</p>}
-          {variant && !variant.inStock && <p className="mb-3 text-sm font-semibold text-danger">This option is currently out of stock</p>}
-          {canBuy ? (
-            <div className="flex flex-wrap items-center gap-3">
-              <QtyStepper value={qty} onChange={setQty} max={maxQty} />
-              <button onClick={addToCart} disabled={pending === variant?.id} className="btn btn-primary btn-lg flex-1">
-                {pending === variant?.id ? <Spinner /> : <ShoppingBag size={18} />} Add to cart
-              </button>
-              <button onClick={buyNow} className="btn btn-accent btn-lg flex-1">
-                Buy now
-              </button>
-            </div>
-          ) : (
-            <button onClick={() => setNotifyOpen(true)} disabled={!variant} className="btn btn-outline btn-lg w-full">
-              <Bell size={18} /> Notify me when it’s back
-            </button>
+      <div className="flex flex-col gap-2">
+        <section className={card}>
+          {p.brand && (
+            <a href={`/shop?brand=${p.brand.slug}`} className="text-[11.5px] font-bold tracking-wider text-peacock uppercase hover:underline">
+              {p.brand.name}
+            </a>
           )}
-          <div className="mt-3 flex gap-2">
-            <button onClick={() => toggleWish(p.id, p.name)} className={`btn btn-ghost btn-sm ${saved ? 'text-rose' : ''}`} aria-pressed={saved}>
-              <Heart size={16} fill={saved ? 'currentColor' : 'none'} /> {saved ? 'Saved' : 'Save for later'}
-            </button>
-            <button onClick={share} className="btn btn-ghost btn-sm">
-              <Share2 size={16} /> Share
-            </button>
+          <h1 className="mt-0.5 text-[19px] leading-[1.25] md:text-[26px]">{p.name}</h1>
+          {p.ratingCount > 0 && (
+            <a href="#reviews" className="mt-2 inline-flex items-center gap-2 text-[13px]">
+              <RatingPill value={p.ratingAvg} />
+              <span className="text-muted">{p.ratingCount} ratings</span>
+              {p.soldCount > 20 && <span className="text-muted">· {p.soldCount}+ sold</span>}
+            </a>
+          )}
+
+          <div className="mt-3">
+            <Price price={price} compareAt={compare} size="xl" />
+            <p className="mt-0.5 text-[11.5px] text-muted">Inclusive of all taxes</p>
           </div>
-        </div>
 
-        <DeliveryCheck settings={settings} />
+          {dealLive && (
+            <div className="mt-3 flex flex-wrap items-center gap-2 rounded-[var(--radius-sm)] bg-marigold-soft px-3 py-2 text-[13px]">
+              <Zap size={16} className="text-[#9a6a00]" fill="currentColor" />
+              <span className="font-semibold">Deal ends in</span>
+              <Countdown to={p.dealEndsAt!} />
+            </div>
+          )}
 
-        <ul className="mt-6 grid grid-cols-3 gap-3 text-center text-xs">
+          {p.shortDescription && <p className="mt-3 text-[13.5px] text-muted">{p.shortDescription}</p>}
+
+          {/* Options */}
+          {p.optionNames.length > 0 && (
+            <div className="mt-4 space-y-4 border-t border-line pt-4">
+              {p.optionNames.map((name) => (
+                <div key={name}>
+                  <div className="mb-2 text-[13px]">
+                    <span className="font-semibold">{name}:</span> <span className="text-muted">{sel[name] ?? 'Choose'}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {p.optionValues[name].map((value) => {
+                      const active = sel[name] === value;
+                      const avail = valueAvailable(name, value);
+                      if (name === 'Color' && SWATCH[value]) {
+                        return (
+                          <button
+                            key={value}
+                            onClick={() => choose(name, value)}
+                            title={avail ? value : `${value} — out of stock`}
+                            aria-label={value}
+                            aria-pressed={active}
+                            className={`relative size-9 rounded-full ring-offset-2 transition ${active ? 'ring-2 ring-ink' : 'ring-1 ring-line hover:ring-ink'} ${avail ? '' : 'opacity-40'}`}
+                            style={{ background: SWATCH[value] }}
+                          />
+                        );
+                      }
+                      const pr = priceOf(name, value);
+                      return (
+                        <button
+                          key={value}
+                          onClick={() => choose(name, value)}
+                          aria-pressed={active}
+                          className={`min-w-[84px] rounded-[var(--radius-sm)] border px-3 py-1.5 text-left transition ${active ? 'border-ink bg-tile ring-1 ring-ink' : 'border-line bg-surface hover:border-ink/60'} ${avail ? '' : 'opacity-50'}`}
+                        >
+                          <span className={`block text-[13px] font-semibold ${avail ? '' : 'line-through'}`}>{value}</span>
+                          {pr !== undefined && <span className="block text-[11.5px] text-muted">{avail ? inr(pr) : 'Sold out'}</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Stock + actions */}
+          <div className="mt-4 border-t border-line pt-4">
+            {variant && variant.lowStock && <p className="mb-2 text-[13px] font-semibold text-rose">Hurry, only {variant.stock} left in stock</p>}
+            {variant && !variant.inStock && <p className="mb-2 text-[13px] font-semibold text-danger">This option is currently out of stock</p>}
+            {canBuy ? (
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[13px] font-semibold">Qty</span>
+                  <QtyStepper value={qty} onChange={setQty} max={maxQty} />
+                </div>
+                <div className="hidden flex-1 gap-2 lg:flex">
+                  <button onClick={addToCart} disabled={pending === variant?.id} className="btn btn-primary btn-lg flex-1">
+                    {pending === variant?.id ? <Spinner /> : <ShoppingCart size={17} />} Add to cart
+                  </button>
+                  <button onClick={buyNow} className="btn btn-accent btn-lg flex-1">
+                    Buy now
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button onClick={() => setNotifyOpen(true)} disabled={!variant} className="btn btn-outline btn-lg w-full">
+                <Bell size={17} /> Notify me when it’s back
+              </button>
+            )}
+          </div>
+        </section>
+
+        {glance.length > 0 && (
+          <section className={`${card} !bg-peacock-soft/60`}>
+            <h2 className="flex items-center gap-2 text-[14px] font-semibold">
+              <Sprout size={16} className="text-peacock" /> At a glance
+            </h2>
+            <dl className="mt-2.5 space-y-2 text-[13px]">
+              {glance.map((g) => (
+                <div key={g.label} className="grid grid-cols-[96px_1fr] gap-3">
+                  <dt className="text-muted">{g.label}</dt>
+                  <dd className="font-semibold">{g.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
+
+        <DeliveryCheck settings={settings} cardClass={card} />
+
+        <ul className={`${card} grid grid-cols-3 gap-2 !py-3 text-center text-[11.5px] font-medium`}>
           {[
-            { icon: RotateCcw, label: `${settings?.returnWindowDays ?? 7}-day easy returns` },
+            { icon: ShieldCheck, label: 'Genuine, sealed pack' },
             { icon: Banknote, label: settings?.codEnabled ? 'Cash on Delivery' : 'Prepaid only' },
-            { icon: ShieldCheck, label: 'Secure checkout' },
+            { icon: RotateCcw, label: `${settings?.returnWindowDays ?? 7}-day returns` },
           ].map((b) => (
-            <li key={b.label} className="rounded-[var(--radius-sm)] bg-surface px-2 py-3 ring-1 ring-line">
-              <b.icon size={20} className="mx-auto mb-1.5 text-peacock" />
+            <li key={b.label}>
+              <b.icon size={20} className="mx-auto mb-1 text-peacock" />
               {b.label}
             </li>
           ))}
         </ul>
 
         {/* Details */}
-        <div className="mt-8 divide-y divide-line border-y border-line">
+        <section className={`${card} !py-0 divide-y divide-line`}>
           {p.description && (
-            <details open className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between font-semibold">
+            <details open className="group py-3.5">
+              <summary className="flex cursor-pointer list-none items-center justify-between text-[14px] font-semibold">
                 Description <span className="text-xl leading-none transition group-open:rotate-45">+</span>
               </summary>
-              <div className="prose-store mt-2 text-[15px]">
+              <div className="prose-store mt-2 text-[13.5px]">
                 <ReactMarkdown>{p.description}</ReactMarkdown>
               </div>
             </details>
           )}
           {p.specs.length > 0 && (
-            <details open className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between font-semibold">
+            <details open className="group py-3.5">
+              <summary className="flex cursor-pointer list-none items-center justify-between text-[14px] font-semibold">
                 Specifications <span className="text-xl leading-none transition group-open:rotate-45">+</span>
               </summary>
-              <dl className="mt-3 grid grid-cols-[minmax(0,40%)_1fr] gap-x-4 gap-y-2.5 text-sm">
-                {p.specs.map((s) => (
-                  <div key={s.label} className="contents">
-                    <dt className="text-muted">{s.label}</dt>
-                    <dd className="font-medium">{s.value}</dd>
+              <dl className="mt-2.5 overflow-hidden rounded-[var(--radius-sm)] border border-line text-[13px]">
+                {[...p.specs, ...(variant ? [{ label: 'SKU', value: variant.sku }] : [])].map((x, i) => (
+                  <div key={x.label} className={`grid grid-cols-[minmax(0,38%)_1fr] gap-3 px-3 py-2 ${i % 2 ? 'bg-surface' : 'bg-paper'}`}>
+                    <dt className="text-muted">{x.label}</dt>
+                    <dd className="font-medium">{x.value}</dd>
                   </div>
                 ))}
-                {variant && (
-                  <div className="contents">
-                    <dt className="text-muted">SKU</dt>
-                    <dd className="font-medium">{variant.sku}</dd>
-                  </div>
-                )}
               </dl>
             </details>
           )}
-        </div>
+        </section>
       </div>
 
-      {/* Sticky mobile bar */}
+      {/* Sticky mobile bar (replaces the bottom tab bar on this page) */}
       {canBuy && (
-        <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-line bg-surface/95 px-4 py-3 backdrop-blur lg:hidden">
-          <div className="min-w-0 flex-1">
-            <div className="price text-lg">{inr(price)}</div>
-            {variant?.title !== 'Default' && <div className="truncate text-xs text-muted">{variant?.title}</div>}
-          </div>
-          <button onClick={addToCart} className="btn btn-primary">
-            Add to cart
+        <div className="product-bar fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 gap-2 border-t border-line bg-surface p-2 pb-[max(8px,env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(15,46,29,.08)] lg:hidden">
+          <button onClick={addToCart} disabled={pending === variant?.id} className="btn btn-outline !h-11 !text-[14px]">
+            {pending === variant?.id ? <Spinner /> : <ShoppingCart size={16} />} Add to cart
+          </button>
+          <button onClick={buyNow} className="btn btn-accent !h-11 !text-[14px]">
+            Buy now · {inr(price * qty)}
           </button>
         </div>
       )}
@@ -287,7 +314,7 @@ export function ProductView({ product: p, settings }: { product: ProductDetail; 
   );
 }
 
-function DeliveryCheck({ settings }: { settings: StoreSettings | null }) {
+function DeliveryCheck({ settings, cardClass }: { settings: StoreSettings | null; cardClass: string }) {
   const [pin, setPin] = useState('');
   const [busy, setBusy] = useState(false);
   const [res, setRes] = useState<{ days: number; eta: string; codAvailable: boolean } | null>(null);
@@ -318,8 +345,8 @@ function DeliveryCheck({ settings }: { settings: StoreSettings | null }) {
   };
 
   return (
-    <div className="mt-7 rounded-[var(--radius)] bg-surface p-4 ring-1 ring-line">
-      <div className="flex items-center gap-2 text-sm font-semibold">
+    <section className={cardClass}>
+      <div className="flex items-center gap-2 text-[14px] font-semibold">
         <Truck size={17} className="text-peacock" /> Delivery
       </div>
       <form onSubmit={check} className="mt-3 flex gap-2">
@@ -337,10 +364,10 @@ function DeliveryCheck({ settings }: { settings: StoreSettings | null }) {
           <p>
             Get it by <b>{date(res.eta, { weekday: 'short', day: 'numeric', month: 'short' })}</b>
           </p>
-          <p className="text-muted">{res.codAvailable ? 'Cash on Delivery available' : 'Prepaid orders only'} · Free delivery over {inr(settings?.freeShippingThreshold ?? 49900)}</p>
+          <p className="text-muted">{res.codAvailable ? 'Cash on Delivery available' : 'Prepaid orders only'} · Free delivery over {inr(settings?.freeShippingThreshold ?? 99900)}</p>
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

@@ -208,7 +208,7 @@ function FilterBody({ facets }: { facets: Facets }) {
 export function ShopFilters({ facets }: { facets: Facets }) {
   return (
     <aside className="hidden w-60 shrink-0 lg:block" aria-label="Filters">
-      <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2">
+      <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
         <FilterBody facets={facets} />
       </div>
     </aside>
@@ -241,7 +241,7 @@ export function SortSelect() {
   return (
     <label className="flex items-center gap-2 text-sm">
       <span className="hidden text-muted sm:inline">Sort by</span>
-      <select value={params.get('sort') ?? 'relevance'} onChange={(e) => set({ sort: e.target.value === 'relevance' ? null : e.target.value })} className="h-9 rounded-full border-[1.5px] border-line bg-surface px-3 pr-8 text-sm font-medium">
+      <select value={params.get('sort') ?? 'relevance'} onChange={(e) => set({ sort: e.target.value === 'relevance' ? null : e.target.value })} className="h-9 rounded-[var(--radius-sm)] border border-line bg-surface px-3 pr-8 text-sm font-medium">
         {SORTS.map((s) => (
           <option key={s.value} value={s.value}>
             {s.label}

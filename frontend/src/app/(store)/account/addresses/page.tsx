@@ -47,7 +47,7 @@ export default function AddressesPage() {
   return (
     <div>
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <h1 className="text-[32px] md:text-[40px]">Addresses</h1>
+        <h1 className="text-[22px] md:text-[28px]">Addresses</h1>
         <button onClick={() => setEditing('new')} className="btn btn-primary btn-sm">
           <Plus size={16} /> Add address
         </button>

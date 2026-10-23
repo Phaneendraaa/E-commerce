@@ -40,7 +40,7 @@ export function CouponBox({ cart, onApply, onRemove }: { cart: Cart; onApply: (c
 
   if (applied) {
     return (
-      <div className="flex items-center justify-between rounded-[var(--radius-sm)] border-[1.5px] border-dashed border-peacock bg-peacock-soft px-3 py-2.5 text-sm">
+      <div className="flex items-center justify-between rounded-[var(--radius-sm)] border border-dashed border-peacock bg-peacock-soft px-3 py-2.5 text-sm">
         <div className="flex items-center gap-2">
           <BadgePercent size={18} className="text-peacock" />
           <div>

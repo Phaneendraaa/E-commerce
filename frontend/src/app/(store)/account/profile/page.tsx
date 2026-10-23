@@ -41,7 +41,7 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-5">
-      <h1 className="text-[32px] md:text-[40px]">Profile & security</h1>
+      <h1 className="text-[22px] md:text-[28px]">Profile & security</h1>
 
       <Section title="Personal details">
         <form

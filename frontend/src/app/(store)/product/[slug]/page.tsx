@@ -60,8 +60,8 @@ export default async function ProductPage({ params }: { params: Params }) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div className="container-x pt-6">
-        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1 text-[13px] text-muted">
+      <div className="container-x pt-3 md:pt-4">
+        <nav aria-label="Breadcrumb" className="scrollbar-none hidden flex-wrap items-center gap-1 text-[12px] text-muted md:flex">
           <Link href="/" className="hover:text-ink">
             Home
           </Link>
@@ -82,15 +82,17 @@ export default async function ProductPage({ params }: { params: Params }) {
 
       {!!related?.frequentlyBoughtTogether.length && <FrequentlyBought base={p} items={related.frequentlyBoughtTogether} />}
 
-      <div className="container-x mt-16 grid gap-12 lg:grid-cols-[1fr_380px]">
+      <div className="container-x mt-2 grid gap-2 md:mt-3 md:gap-3 lg:grid-cols-[1fr_380px]">
         <ProductReviews productId={p.id} ratingAvg={p.ratingAvg} ratingCount={p.ratingCount} breakdown={p.ratingBreakdown} />
         <ProductQuestions productId={p.id} />
       </div>
 
       {!!related?.related.length && (
-        <section className="container-x mt-16">
-          <h2 className="mb-5 text-2xl md:text-3xl">You may also like</h2>
-          <ProductRail items={related.related} />
+        <section className="container-x mt-2 md:mt-3">
+          <div className="rounded-[var(--radius)] border border-line bg-surface p-3 md:p-5">
+            <h2 className="mb-3 text-[17px] md:text-[21px]">You may also like</h2>
+            <ProductRail items={related.related} />
+          </div>
         </section>
       )}
       <RecentlyViewed excludeId={p.id} />

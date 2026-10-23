@@ -54,7 +54,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
   const sp = await searchParams;
   const query = toQuery(sp);
   const [data, cats] = await Promise.all([serverApi<ListResponse>(`/products?${query}`, { revalidate: 30 }), serverApi<{ categories: Category[] }>('/categories')]);
-  if (!data) return <div className="container-x py-24 text-center text-muted">Couldn’t load products right now. Please refresh.</div>;
+  if (!data) return <div className="container-x py-16 text-center text-muted">Couldn’t load products right now. Please refresh.</div>;
 
   const cat = data.category;
   const root = cats?.categories.find((c) => c.slug === cat?.breadcrumb[0]?.slug);
@@ -70,7 +70,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
   };
 
   return (
-    <div className="container-x pt-6">
+    <div className="container-x pt-3 md:pt-5">
       <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1 text-[13px] text-muted">
         <Link href="/" className="hover:text-ink">
           Home
@@ -95,7 +95,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
 
       <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-[34px] md:text-[48px]">{heading(sp, cat)}</h1>
+          <h1 className="text-[22px] md:text-[28px]">{heading(sp, cat)}</h1>
           <p className="mt-1 text-sm text-muted">
             {data.total} {data.total === 1 ? 'product' : 'products'}
             {cat?.description ? ` · ${cat.description}` : ''}
@@ -118,7 +118,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
         </div>
       )}
 
-      <div className="mt-8 flex gap-10">
+      <div className="mt-4 flex gap-6 md:mt-5 lg:gap-6">
         <Suspense>
           <ShopFilters facets={data.facets} />
         </Suspense>
@@ -149,7 +149,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
           )}
 
           {data.totalPages > 1 && (
-            <nav className="mt-12 flex items-center justify-center gap-1.5" aria-label="Pagination">
+            <nav className="mt-6 flex items-center justify-center gap-1.5" aria-label="Pagination">
               {page > 1 && (
                 <Link href={pageHref(page - 1)} className="chip">
                   Previous

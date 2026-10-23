@@ -30,7 +30,7 @@ export default function OrdersPage() {
 
   return (
     <div>
-      <h1 className="text-[32px] md:text-[40px]">Orders</h1>
+      <h1 className="text-[22px] md:text-[28px]">Orders</h1>
       <div className="scrollbar-none mt-5 flex gap-2 overflow-x-auto">
         {TABS.map((t) => (
           <button key={t.label} onClick={() => (setTab(t.value), setPage(1))} data-active={tab === t.value} className="chip shrink-0">

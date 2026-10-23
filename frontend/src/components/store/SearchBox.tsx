@@ -104,7 +104,7 @@ export function SearchBox({ autoFocus, onDone }: { autoFocus?: boolean; onDone?:
       >
         <label className="relative block">
           <span className="sr-only">Search products</span>
-          <Search size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+          <Search size={17} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
           <input
             value={q}
             autoFocus={autoFocus}
@@ -115,8 +115,8 @@ export function SearchBox({ autoFocus, onDone }: { autoFocus?: boolean; onDone?:
             }}
             onFocus={() => setOpen(true)}
             onKeyDown={onKey}
-            placeholder="Search for shoes, headphones, serums…"
-            className="h-11 w-full rounded-full border-[1.5px] border-transparent bg-tile pl-11 pr-10 text-[14px] outline-none transition placeholder:text-faint focus:border-ink focus:bg-surface"
+            placeholder="Search fertilizers, crops, NPK…"
+            className="h-10 w-full rounded-[var(--radius-sm)] border border-line bg-tile pl-10 pr-9 text-[14px] outline-none transition placeholder:text-muted/80 focus:border-ink focus:bg-surface"
             role="combobox"
             aria-expanded={Boolean(showResults || showRecent)}
             aria-controls="search-suggestions"

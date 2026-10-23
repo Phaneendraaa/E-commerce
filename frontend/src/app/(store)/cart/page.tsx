@@ -60,9 +60,9 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container-x py-8">
-      <h1 className="text-[34px] md:text-[44px]">Your cart</h1>
-      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_380px]">
+    <div className="container-x py-4 md:py-6">
+      <h1 className="text-[22px] md:text-[28px]">Your cart</h1>
+      <div className="mt-4 grid gap-4 md:mt-5 md:gap-6 lg:grid-cols-[1fr_380px]">
         <div>
           <FreeShippingMeter remaining={cart.freeShippingRemaining} subtotal={cart.subtotal - cart.discount} />
           {cart.hasIssues && <p className="mt-4 rounded-[var(--radius-sm)] bg-rose-soft px-4 py-3 text-sm font-medium text-danger">Some items need your attention before checkout.</p>}

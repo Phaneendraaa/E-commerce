@@ -103,7 +103,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <nav className="flex h-full flex-col bg-ink text-white/75" aria-label="Admin">
       <div className="flex h-16 items-center justify-between px-5">
         <Link href="/admin" className="font-display text-xl font-extrabold text-white">
-          ShopNest <span className="ml-1 rounded bg-marigold px-1.5 py-0.5 align-middle font-sans text-[10px] font-bold text-ink">ADMIN</span>
+          Verdant <span className="ml-1 rounded bg-marigold px-1.5 py-0.5 align-middle font-sans text-[10px] font-bold text-ink">ADMIN</span>
         </Link>
         <button className="text-white lg:hidden" onClick={() => setOpen(false)} aria-label="Close menu">
           <X size={20} />

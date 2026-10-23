@@ -31,7 +31,7 @@ export default function AccountOverview() {
 
   return (
     <div>
-      <h1 className="text-[32px] md:text-[40px]">My account</h1>
+      <h1 className="text-[22px] md:text-[28px]">My account</h1>
       <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
         {cards.map((c) => (
           <Link key={c.href} href={c.href} className="rounded-[var(--radius)] bg-surface p-4 ring-1 ring-line hover:ring-ink">

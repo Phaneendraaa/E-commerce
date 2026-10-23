@@ -49,7 +49,7 @@ export function ProductReviews({ productId, ratingAvg, ratingCount, breakdown }:
   return (
     <section id="reviews" className="scroll-mt-24">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <h2 className="text-2xl md:text-3xl">Ratings & reviews</h2>
+        <h2 className="text-[17px] md:text-[21px]">Ratings & reviews</h2>
         {status === 'authed' ? (
           <button onClick={() => setWriting(true)} className="btn btn-outline btn-sm">
             {eligible?.hasReviewed ? 'Edit your review' : 'Write a review'}
@@ -64,7 +64,7 @@ export function ProductReviews({ productId, ratingAvg, ratingCount, breakdown }:
       {ratingCount > 0 && (
         <div className="mt-6 grid gap-6 rounded-[var(--radius)] bg-surface p-6 ring-1 ring-line sm:grid-cols-[180px_1fr]">
           <div>
-            <div className="font-display text-6xl font-bold leading-none">{ratingAvg.toFixed(1)}</div>
+            <div className="font-display text-5xl font-bold leading-none">{ratingAvg.toFixed(1)}</div>
             <Stars value={ratingAvg} size={18} className="mt-2" />
             <div className="mt-1 text-sm text-muted">{ratingCount} verified ratings</div>
           </div>
@@ -103,7 +103,7 @@ export function ProductReviews({ productId, ratingAvg, ratingCount, breakdown }:
               setSort(e.target.value);
               setPage(1);
             }}
-            className="h-9 rounded-full border-[1.5px] border-line bg-surface px-3 text-sm"
+            className="h-9 rounded-[var(--radius-sm)] border border-line bg-surface px-3 text-sm"
             aria-label="Sort reviews"
           >
             <option value="helpful">Most helpful</option>

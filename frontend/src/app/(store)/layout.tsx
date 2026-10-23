@@ -5,14 +5,14 @@ import { Footer } from '@/components/store/Footer';
 import { CartDrawer } from '@/components/store/CartDrawer';
 
 const fallback: StoreSettings = {
-  storeName: 'ShopNest',
-  tagline: 'Everything you love, delivered.',
+  storeName: 'Verdant',
+  tagline: 'Fertilizers & crop nutrition, delivered to your farm.',
   supportEmail: 'support@shopnest.dev',
   supportPhone: '',
   whatsappNumber: '',
   address: '',
-  freeShippingThreshold: 49900,
-  shippingFee: 4900,
+  freeShippingThreshold: 99900,
+  shippingFee: 7900,
   codEnabled: true,
   codFee: 3900,
   loyaltyPointValue: 100,

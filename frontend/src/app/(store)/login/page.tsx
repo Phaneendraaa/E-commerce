@@ -128,7 +128,7 @@ function OtpLogin() {
                   ['SMS', 'SMS', Smartphone],
                 ] as const
               ).map(([v, l, Icon]) => (
-                <button type="button" key={v} onClick={() => setChannel(v)} aria-pressed={channel === v} className={`flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] border-[1.5px] text-sm font-semibold ${channel === v ? 'border-ink bg-ink text-white' : 'border-line'}`}>
+                <button type="button" key={v} onClick={() => setChannel(v)} aria-pressed={channel === v} className={`flex h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] border text-sm font-semibold ${channel === v ? 'border-ink bg-ink text-white' : 'border-line'}`}>
                   <Icon size={16} /> {l}
                 </button>
               ))}

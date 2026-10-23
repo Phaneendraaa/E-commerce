@@ -46,9 +46,11 @@ export function RecentlyViewed({ excludeId, title = 'Recently viewed' }: { exclu
   const list = items.filter((p) => p.id !== excludeId);
   if (list.length < 2) return null;
   return (
-    <section className="container-x mt-16">
-      <h2 className="mb-5 text-2xl md:text-3xl">{title}</h2>
-      <ProductRail items={list} />
+    <section className="container-x mt-3 md:mt-5">
+      <div className="rounded-[var(--radius)] border border-line bg-surface p-3 md:p-5">
+        <h2 className="mb-3 text-[17px] md:mb-4 md:text-[21px]">{title}</h2>
+        <ProductRail items={list} />
+      </div>
     </section>
   );
 }

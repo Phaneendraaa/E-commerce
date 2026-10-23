@@ -34,16 +34,16 @@ export interface StoreSettings {
 }
 
 export const defaultSettings: StoreSettings = {
-  storeName: process.env.EMAIL_FROM_NAME || 'ShopNest',
-  tagline: 'Everything you love, delivered.',
+  storeName: process.env.EMAIL_FROM_NAME || 'Verdant',
+  tagline: 'Fertilizers & crop nutrition, delivered to your farm.',
   supportEmail: 'support@shopnest.dev',
   supportPhone: '+91 90000 00000',
   whatsappNumber: '+919000000000',
   address: 'Hyderabad, Telangana, India',
   gstin: '',
   currency: 'INR',
-  freeShippingThreshold: 49900,
-  shippingFee: 4900,
+  freeShippingThreshold: 99900,
+  shippingFee: 7900,
   codEnabled: true,
   codFee: 3900,
   codMaxOrderValue: 1000000,
@@ -56,7 +56,7 @@ export const defaultSettings: StoreSettings = {
   reviewRequestDelayDays: 3,
   trackingReminderHours: 48,
   social: { instagram: 'https://instagram.com', facebook: 'https://facebook.com' },
-  announcement: '🎉 Free shipping on orders above ₹499 · Use WELCOME10 for 10% off your first order',
+  announcement: '🌱 Free delivery above ₹999 · Cash on Delivery · WELCOME10 gives 10% off your first order',
 };
 
 const KEY = 'store';

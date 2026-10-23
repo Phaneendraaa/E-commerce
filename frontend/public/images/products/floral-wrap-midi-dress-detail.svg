@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="800" height="800">
-<defs><radialGradient id="bg" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#ecfeff"/><stop offset="1" stop-color="#cffafe"/></radialGradient>
-<linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366f1"/><stop offset=".5" stop-color="#ec4899"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
-<filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0f172a" flood-opacity=".18"/></filter></defs>
-<rect width="400" height="400" fill="url(#bg)"/>
-<ellipse cx="200" cy="352" rx="120" ry="12" fill="#0f172a" opacity=".08"/>
-<g filter="url(#sh)" transform="translate(200 200) rotate(-8) scale(1.12) translate(-200 -200)"><path d="M170 80 L230 80 L240 150 L310 330 L90 330 L160 150Z" fill="#ec4899" /><path d="M160 150 L240 150 L236 168 L164 168Z" fill="#be1a6b"/><path d="M170 80 L150 95 L160 150 M230 80 L250 95 L240 150" fill="none" stroke="#be1a6b" stroke-width="6"/><circle cx="150" cy="260" r="10" fill="#ff67b8"/><circle cx="230" cy="290" r="12" fill="#ff67b8"/><circle cx="200" cy="215" r="9" fill="#ff67b8"/></g>
-
-</svg>

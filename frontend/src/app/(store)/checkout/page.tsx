@@ -157,7 +157,7 @@ function CheckoutInner() {
 
   if (!quote.lines.length) {
     return (
-      <div className="container-x py-24 text-center">
+      <div className="container-x py-16 text-center">
         <h1 className="text-3xl">Nothing to check out</h1>
         <p className="mt-2 text-muted">Your cart is empty.</p>
         <Link href="/shop" className="btn btn-primary mt-6">
@@ -170,15 +170,15 @@ function CheckoutInner() {
   const selected = addresses?.find((a) => a.id === addressId);
 
   return (
-    <div className="container-x py-8">
+    <div className="container-x py-4 md:py-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-[34px] md:text-[44px]">Checkout</h1>
+        <h1 className="text-[22px] md:text-[28px]">Checkout</h1>
         <span className="flex items-center gap-1.5 text-sm text-muted">
           <Lock size={14} /> Secure checkout
         </span>
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-8">
+      <div className="mt-4 grid gap-4 md:mt-5 md:gap-6 lg:grid-cols-[1fr_400px] lg:gap-8">
         <div className="space-y-5">
           <Step n={1} title="Delivery address" done={Boolean(selected) && !adding}>
             {addresses === null ? (
@@ -202,7 +202,7 @@ function CheckoutInner() {
                         {addressId === a.id && <Check size={18} className="absolute right-3 top-3 text-ink" />}
                       </label>
                     ))}
-                    <button onClick={() => setAdding(true)} className="flex min-h-[110px] items-center justify-center gap-2 rounded-[var(--radius-sm)] border-[1.5px] border-dashed border-line text-sm font-semibold hover:border-ink">
+                    <button onClick={() => setAdding(true)} className="flex min-h-[110px] items-center justify-center gap-2 rounded-[var(--radius-sm)] border border-dashed border-line text-sm font-semibold hover:border-ink">
                       <Plus size={16} /> Add a new address
                     </button>
                   </div>
@@ -333,7 +333,7 @@ function CheckoutInner() {
       <Sheet open={Boolean(mockIntent)} onClose={() => (mockIntent?.resolve(false), setMockIntent(null))} title="Test payment" side="center" width="max-w-sm">
         <div className="p-5">
           <p className="text-sm text-muted">Razorpay keys aren’t configured yet, so this simulates a UPI payment of</p>
-          <p className="price mt-2 text-3xl">{mockIntent && inr(mockIntent.intent.amount)}</p>
+          <p className="price mt-2 text-2xl">{mockIntent && inr(mockIntent.intent.amount)}</p>
           <div className="mt-5 grid grid-cols-2 gap-2">
             <button className="btn btn-outline" onClick={() => (mockIntent?.resolve(false), setMockIntent(null))}>
               Cancel

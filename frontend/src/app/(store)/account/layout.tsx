@@ -36,7 +36,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   const active = (href: string) => (href === '/account' ? pathname === href : pathname.startsWith(href));
 
   return (
-    <div className="container-x py-8">
+    <div className="container-x py-4 md:py-6">
       <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
         <aside>
           <div className="hidden lg:block">

@@ -25,14 +25,14 @@ export default function OrderSuccessPage({ params }: { params: Promise<{ orderNu
       <div className="mx-auto max-w-2xl">
         <div className="animate-rise text-center">
           <CheckCircle2 size={56} className="mx-auto text-peacock" strokeWidth={1.75} />
-          <h1 className="mt-5 text-[38px] md:text-[54px]">Order placed!</h1>
+          <h1 className="mt-5 text-[24px] md:text-[32px]">Order placed!</h1>
           <p className="mt-3 text-muted">
             Order <b className="text-ink">{orderNumber}</b> is confirmed. We’ve sent the details to your email and WhatsApp.
           </p>
         </div>
 
         {order && (
-          <div className="mt-10 rounded-[var(--radius-lg)] bg-surface p-6 ring-1 ring-line">
+          <div className="mt-10 rounded-[var(--radius)] border border-line bg-surface p-4">
             <div className="grid gap-4 text-sm sm:grid-cols-3">
               <div>
                 <div className="text-muted">Estimated delivery</div>

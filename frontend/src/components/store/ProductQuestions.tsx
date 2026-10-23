@@ -45,7 +45,7 @@ export function ProductQuestions({ productId }: { productId: string }) {
 
   return (
     <section>
-      <h2 className="text-2xl md:text-3xl">Questions</h2>
+      <h2 className="text-[17px] md:text-[21px]">Questions</h2>
       <form onSubmit={ask} className="mt-5">
         <label className="sr-only" htmlFor="ask">
           Ask a question

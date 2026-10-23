@@ -1,4 +1,4 @@
-# ShopNest — full-stack e-commerce platform
+# Verdant — full-stack e-commerce platform
 
 A production-ready, re-skinnable online store with a customer storefront, an admin panel with advanced
 analytics, and email/SMS/WhatsApp automation.

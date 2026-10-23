@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="800" height="800">
+<defs><radialGradient id="bg" cx="50%" cy="38%" r="80%"><stop offset="0" stop-color="#ffffc3"/><stop offset="1" stop-color="#fafa90"/></radialGradient><filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#0b2415" flood-opacity=".22"/></filter></defs>
+<rect width="400" height="400" fill="url(#bg)"/><circle cx="340" cy="60" r="110" fill="#fff" opacity=".25"/>
+<ellipse cx="200" cy="392" rx="190" ry="12" fill="#0b2415" opacity=".1"/>
+<g filter="url(#sh)" transform="translate(196 230) rotate(0) scale(1.3) translate(-200 -200)"><defs><clipPath id="botclip"><path d="M138 160 C138 128 156 116 178 112 L222 112 C244 116 262 128 262 160 L262 326 Q262 344 244 344 L156 344 Q138 344 138 326 Z"/></clipPath>
+<linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".25" stop-color="#fff" stop-opacity="0"/><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></linearGradient></defs>
+<rect x="176" y="86" width="48" height="30" fill="#f0b949"/>
+<rect x="168" y="50" width="64" height="42" rx="7" fill="#f6f2e6" stroke="#cfc8b2" stroke-width="1.5"/>
+<line x1="176" y1="54" x2="176" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="182" y1="54" x2="182" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="188" y1="54" x2="188" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="194" y1="54" x2="194" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="200" y1="54" x2="200" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="206" y1="54" x2="206" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="212" y1="54" x2="212" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="218" y1="54" x2="218" y2="88" stroke="#cfc8b2" stroke-width="1.5"/><line x1="224" y1="54" x2="224" y2="88" stroke="#cfc8b2" stroke-width="1.5"/>
+<g clip-path="url(#botclip)">
+<rect x="130" y="100" width="140" height="250" fill="#d19a2a"/>
+<rect x="130" y="176" width="140" height="132" fill="#fffdf5"/>
+<rect x="130" y="176" width="140" height="7" fill="#e5a117"/>
+<text x="200" y="152" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="2">AGROPLUS</text>
+<text x="200" y="204" font-family="Helvetica, Arial, sans-serif" font-size="6.6" font-weight="700" fill="#d19a2a" text-anchor="middle" letter-spacing="0.8">REDUCES FLOWER DROP</text>
+<text x="200" y="244" font-family="Helvetica, Arial, sans-serif" font-size="18.9" font-weight="800" fill="#9e6700" text-anchor="middle" letter-spacing="0">FRUIT SET</text>
+<path transform="translate(200 284) rotate(0) scale(0.42)" d="M0 0 C-14 -12 -14 -34 0 -48 C14 -34 14 -12 0 0Z" fill="#d19a2a"/><path transform="translate(200 284) rotate(0) scale(0.42)" d="M0 0 L0 -40" stroke="#ab7404" stroke-width="1.6" fill="none"/>
+<rect x="130" y="100" width="140" height="250" fill="url(#sheen)"/>
+</g>
+<path d="M138 160 C138 128 156 116 178 112 L222 112 C244 116 262 128 262 160 L262 326 Q262 344 244 344 L156 344 Q138 344 138 326 Z" fill="none" stroke="#703900" stroke-width="1.5" stroke-opacity=".7"/>
+<rect x="206" y="312" width="52" height="22" rx="11" fill="#e5a117" stroke="#fff" stroke-width="2"/>
+<text x="232" y="328" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#0f2e1d" text-anchor="middle" letter-spacing="0">250 ml</text></g>
+</svg>
